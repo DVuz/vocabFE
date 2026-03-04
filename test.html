@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VocabRender – Từ điển thông minh</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #16a34a;
+    --green-light: #4ade80;
+    --green-pale: #dcfce7;
+    --yellow: #f59e0b;
+    --yellow-light: #fef3c7;
+    --zinc-900: #09090b;
+    --zinc-800: #18181b;
+    --zinc-700: #27272a;
+    --zinc-600: #3f3f46;
+    --zinc-400: #a1a1aa;
+    --zinc-200: #e4e4e7;
+    --zinc-100: #f4f4f5;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--zinc-900);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--zinc-200);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--zinc-900);
+    letter-spacing: -0.02em;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--green);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 1.1rem;
+  }
+  .logo-dot { color: var(--green); }
+  .nav-search {
+    display: flex; align-items: center; gap: 0;
+    border: 1.5px solid var(--zinc-200);
+    border-radius: 99px;
+    overflow: hidden;
+    background: var(--zinc-100);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .nav-search:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+    background: white;
+  }
+  .nav-search input {
+    border: none; background: transparent;
+    padding: 8px 16px 8px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .875rem;
+    width: 260px;
+    outline: none;
+    color: var(--zinc-900);
+  }
+  .nav-search input::placeholder { color: var(--zinc-400); }
+  .nav-search button {
+    border: none; cursor: pointer;
+    background: var(--green);
+    color: white;
+    padding: 8px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    transition: background .2s;
+  }
+  .nav-search button:hover { background: #15803d; }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .btn-ghost {
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .875rem; font-weight: 500;
+    color: var(--zinc-900); padding: 8px 0;
+    transition: color .2s;
+  }
+  .btn-ghost:hover { color: var(--green); }
+  .btn-login {
+    background: var(--green); color: white; border: none;
+    padding: 8px 20px; border-radius: 99px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .875rem; font-weight: 600;
+    transition: background .2s, transform .1s;
+  }
+  .btn-login:hover { background: #15803d; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 64px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    overflow: hidden;
+  }
+  /* background blobs */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 10%, rgba(220,252,231,.7) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(254,243,199,.5) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 90% 20%, rgba(74,222,128,.08) 0%, transparent 70%);
+  }
+  .hero-badge {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-pale);
+    border: 1px solid rgba(22,163,74,.25);
+    border-radius: 99px;
+    padding: 6px 16px;
+    font-size: .78rem; font-weight: 600;
+    color: var(--green);
+    letter-spacing: .04em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeDown .6s ease both;
+  }
+  .hero-badge span { font-size: .9rem; }
+  h1 {
+    position: relative; z-index: 1;
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--zinc-900);
+    max-width: 700px;
+    animation: fadeDown .6s .1s ease both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+  .hero-sub {
+    position: relative; z-index: 1;
+    font-size: 1.05rem; color: var(--zinc-400);
+    max-width: 480px; line-height: 1.7;
+    margin-top: 20px; margin-bottom: 36px;
+    animation: fadeDown .6s .2s ease both;
+  }
+
+  /* search box */
+  .hero-search {
+    position: relative; z-index: 1;
+    display: flex; align-items: center;
+    background: white;
+    border: 2px solid var(--zinc-200);
+    border-radius: 16px;
+    overflow: hidden;
+    width: min(580px, 100%);
+    box-shadow: 0 8px 32px rgba(0,0,0,.08), 0 2px 8px rgba(22,163,74,.06);
+    transition: border-color .2s, box-shadow .25s;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .hero-search:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 8px 32px rgba(22,163,74,.12), 0 0 0 4px rgba(22,163,74,.08);
+  }
+  .hero-search-icon {
+    padding: 0 16px 0 20px;
+    color: var(--zinc-400); font-size: 1.1rem; pointer-events: none;
+  }
+  .hero-search input {
+    flex: 1; border: none; outline: none;
+    padding: 18px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; color: var(--zinc-900);
+    background: transparent;
+  }
+  .hero-search input::placeholder { color: var(--zinc-400); }
+  .hero-search-btn {
+    margin: 8px; background: var(--green); color: white;
+    border: none; border-radius: 10px; cursor: pointer;
+    padding: 12px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; font-weight: 600;
+    white-space: nowrap;
+    transition: background .2s, transform .1s;
+  }
+  .hero-search-btn:hover { background: #15803d; transform: scale(1.02); }
+
+  .hero-suggestions {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap; justify-content: center;
+    margin-top: 16px;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .hero-suggestions span { font-size: .78rem; color: var(--zinc-400); font-weight: 500; }
+  .chip {
+    background: none; border: 1.5px solid var(--zinc-200); cursor: pointer;
+    border-radius: 99px; padding: 5px 14px;
+    font-family: 'DM+Mono', monospace; font-size: .78rem;
+    color: var(--zinc-700);
+    transition: all .2s;
+  }
+  .chip:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 40px;
+    justify-content: center;
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: 1px solid var(--zinc-200);
+    width: min(680px, 100%);
+    animation: fadeUp .6s .5s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem; font-weight: 800;
+    color: var(--zinc-900); letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-num span { color: var(--green); }
+  .stat-label { font-size: .75rem; color: var(--zinc-400); font-weight: 500; margin-top: 4px; }
+  .stat-divider { width: 1px; height: 40px; background: var(--zinc-200); }
+
+  /* ── FEATURES ── */
+  .features {
+    padding: 80px 40px;
+    background: var(--zinc-100);
+    border-top: 1px solid var(--zinc-200);
+  }
+  .features-inner {
+    max-width: 1080px; margin: 0 auto;
+  }
+  .features-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px;
+  }
+  .features-title {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem; font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.15;
+    color: var(--zinc-900);
+  }
+  .features-title em { color: var(--green); font-style: italic; }
+  .features-sub { font-size: .875rem; color: var(--zinc-400); max-width: 200px; text-align: right; line-height: 1.6; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    border: 1.5px solid var(--zinc-200);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s ease;
+  }
+  .card:hover {
+    border-color: var(--green);
+    box-shadow: 0 12px 40px rgba(22,163,74,.1);
+    transform: translateY(-4px);
+  }
+  .card:hover::after { transform: scaleX(1); }
+  .card-icon {
+    width: 48px; height: 48px;
+    background: var(--green-pale);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    transition: background .2s;
+  }
+  .card:hover .card-icon { background: var(--green); }
+  .card:hover .card-icon svg { stroke: white; }
+  .card-title {
+    font-weight: 700; font-size: 1rem; color: var(--zinc-900);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .card-desc { font-size: .86rem; color: var(--zinc-400); line-height: 1.65; }
+  .card-cta {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 18px; font-size: .82rem; font-weight: 600;
+    color: var(--green); text-decoration: none;
+    transition: gap .2s;
+  }
+  .card:hover .card-cta { gap: 8px; }
+
+  /* yellow accent card */
+  .card-accent {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-color: #fde68a;
+  }
+  .card-accent .card-icon { background: #fef3c7; }
+  .card-accent:hover { border-color: var(--yellow); box-shadow: 0 12px 40px rgba(245,158,11,.12); }
+  .card-accent::after { background: var(--yellow); }
+  .card-accent:hover .card-icon { background: var(--yellow); }
+  .card-accent .card-cta { color: var(--yellow); }
+
+  /* ── WORD PREVIEW SECTION ── */
+  .preview {
+    padding: 80px 40px;
+    background: var(--zinc-900);
+    position: relative; overflow: hidden;
+  }
+  .preview::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 10% 50%, rgba(22,163,74,.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 90% 30%, rgba(245,158,11,.07) 0%, transparent 60%);
+  }
+  .preview-inner {
+    position: relative; z-index: 1;
+    max-width: 1080px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+  }
+  .preview-label {
+    display: inline-block;
+    background: rgba(74,222,128,.15);
+    border: 1px solid rgba(74,222,128,.3);
+    border-radius: 99px;
+    padding: 5px 14px;
+    font-size: .72rem; font-weight: 700;
+    color: var(--green-light); letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .preview-title {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: 2.4rem; letter-spacing: -0.03em; line-height: 1.15;
+    color: white; margin-bottom: 16px;
+  }
+  .preview-title em { color: var(--green-light); font-style: italic; }
+  .preview-text { font-size: .9rem; color: #71717a; line-height: 1.7; }
+  .preview-features { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .preview-feature {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: .875rem; color: #d4d4d8; line-height: 1.5;
+  }
+  .pf-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-light); flex-shrink: 0; margin-top: 6px;
+  }
+
+  /* word card */
+  .word-card {
+    background: #18181b;
+    border: 1.5px solid #3f3f46;
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .word-head {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;
+  }
+  .word-main {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: 2.4rem; color: white; letter-spacing: -0.03em;
+  }
+  .word-pos {
+    background: rgba(74,222,128,.15);
+    color: var(--green-light);
+    border: 1px solid rgba(74,222,128,.25);
+    border-radius: 6px; padding: 2px 10px;
+    font-size: .75rem; font-weight: 600;
+  }
+  .word-phonetic {
+    font-family: 'DM Mono', monospace;
+    font-size: .88rem; color: #71717a; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .play-btn {
+    width: 28px; height: 28px;
+    background: rgba(74,222,128,.15);
+    border: 1px solid rgba(74,222,128,.2);
+    border-radius: 50%; display: grid; place-items: center;
+    cursor: pointer; transition: all .2s; color: var(--green-light); font-size: .75rem;
+  }
+  .play-btn:hover { background: var(--green); border-color: var(--green); color: white; }
+  .word-meaning {
+    font-size: .92rem; color: #d4d4d8; line-height: 1.6; margin-bottom: 20px;
+    padding-bottom: 20px; border-bottom: 1px solid #3f3f46;
+  }
+  .word-example {
+    font-size: .85rem; color: #71717a; font-style: italic; line-height: 1.6;
+    border-left: 3px solid var(--green); padding-left: 16px; margin-bottom: 20px;
+  }
+  .word-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tag {
+    background: #27272a; color: #a1a1aa;
+    border-radius: 6px; padding: 4px 12px; font-size: .75rem; font-weight: 500;
+  }
+  .word-actions { display: flex; gap: 10px; }
+  .action-btn {
+    flex: 1; padding: 10px 0;
+    border-radius: 10px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
+    transition: all .2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .action-save {
+    background: var(--green); color: white;
+  }
+  .action-save:hover { background: #15803d; transform: translateY(-1px); }
+  .action-list {
+    background: #27272a; color: #a1a1aa;
+    border: 1.5px solid #3f3f46;
+  }
+  .action-list:hover { border-color: #52525b; color: white; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--zinc-900);
+    border-top: 1px solid #27272a;
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: .8rem; color: #52525b;
+  }
+  .footer-logo {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: 1rem; color: #71717a; letter-spacing: -0.02em;
+  }
+  .footer-logo span { color: var(--green); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: #52525b; text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--green-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-search { display: none; }
+    .cards { grid-template-columns: 1fr; }
+    .preview-inner { grid-template-columns: 1fr; gap: 40px; }
+    .features { padding: 60px 20px; }
+    .features-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .features-sub { text-align: left; max-width: none; }
+    .preview { padding: 60px 20px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .stats-bar { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">📖</div>
+    Vocab<span class="logo-dot">Render</span>
+  </a>
+  <div class="nav-search">
+    <input type="text" placeholder="Nhập từ cần tra (vd: serendipity)...">
+    <button>Tra</button>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-ghost">Từ yêu thích</button>
+    <button class="btn-login">Đăng nhập</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-badge"><span>✦</span> Từ điển thông minh</div>
+  <h1>Tra từ <em>thông minh</em>,<br>học từ hiệu quả</h1>
+  <p class="hero-sub">Tra từ ngay lập tức, lưu từ yêu thích và xây dựng bộ từ vựng của riêng bạn.</p>
+
+  <div class="hero-search">
+    <span class="hero-search-icon">🔍</span>
+    <input type="text" placeholder="Nhập từ cần tra (vd: accommodation)...">
+    <button class="hero-search-btn">Tra từ</button>
+  </div>
+
+  <div class="hero-suggestions">
+    <span>Thử:</span>
+    <button class="chip">accommodation</button>
+    <button class="chip">perseverance</button>
+    <button class="chip">eloquent</button>
+    <button class="chip">ephemeral</button>
+    <button class="chip">serendipity</button>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">250<span>K+</span></div>
+      <div class="stat-label">Từ vựng tiếng Anh</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">1.2<span>M</span></div>
+      <div class="stat-label">Người dùng</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">Hài lòng</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features">
+  <div class="features-inner">
+    <div class="features-header">
+      <h2 class="features-title">Tất cả trong<br>một <em>công cụ</em></h2>
+      <p class="features-sub">Mọi thứ bạn cần để học từ vựng hiệu quả hơn.</p>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <div class="card-title">Tra từ tức thì</div>
+        <p class="card-desc">Không cần tài khoản. Tìm định nghĩa, phiên âm và ví dụ cho hàng nghìn từ tiếng Anh ngay lập tức.</p>
+        <a href="#" class="card-cta">Tra ngay →</a>
+      </div>
+
+      <div class="card card-accent">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Lưu từ yêu thích</div>
+        <p class="card-desc">Lưu những từ quan trọng để ôn tập sau. Truy cập mọi lúc, mọi nơi trên mọi thiết bị.</p>
+        <a href="#" class="card-cta">Đăng nhập để lưu từ →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Tạo danh sách từ</div>
+        <p class="card-desc">Tổ chức từ vựng theo chủ đề riêng: "IELTS Vocabulary", "Business English"... Học có hệ thống hơn.</p>
+        <a href="#" class="card-cta">Bắt đầu ngay →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WORD PREVIEW ── -->
+<section class="preview">
+  <div class="preview-inner">
+    <div>
+      <div class="preview-label">✦ Kết quả tra từ</div>
+      <h2 class="preview-title">Định nghĩa chi tiết<br>& <em>sinh động</em></h2>
+      <p class="preview-text">Mỗi từ đi kèm phiên âm, từ loại, định nghĩa đầy đủ, ví dụ thực tế và từ đồng nghĩa – tất cả trong một trang.</p>
+      <div class="preview-features">
+        <div class="preview-feature"><div class="pf-dot"></div><span>Phiên âm IPA chuẩn, nghe phát âm trực tiếp</span></div>
+        <div class="preview-feature"><div class="pf-dot"></div><span>Ví dụ câu thực tế từ văn phong học thuật & hội thoại</span></div>
+        <div class="preview-feature"><div class="pf-dot"></div><span>Từ đồng nghĩa, trái nghĩa và cách dùng liên quan</span></div>
+        <div class="preview-feature"><div class="pf-dot"></div><span>Gợi ý từ phù hợp theo ngữ cảnh IELTS, TOEIC</span></div>
+      </div>
+    </div>
+
+    <div class="word-card">
+      <div class="word-head">
+        <div class="word-main">serendipity</div>
+        <span class="word-pos">noun</span>
+      </div>
+      <div class="word-phonetic">
+        /ˌser.ənˈdɪp.ɪ.ti/
+        <button class="play-btn">▶</button>
+      </div>
+      <div class="word-meaning">
+        Khả năng tìm thấy những điều tốt đẹp, thú vị một cách tình cờ, không có chủ ý trước.
+      </div>
+      <div class="word-example">
+        "The discovery was a happy serendipity — he hadn't planned to be there at all."
+      </div>
+      <div class="word-tags">
+        <span class="tag">IELTS Writing</span>
+        <span class="tag">Academic</span>
+        <span class="tag">C1 Level</span>
+      </div>
+      <div class="word-actions">
+        <button class="action-btn action-save">♡ Lưu từ</button>
+        <button class="action-btn action-list">+ Danh sách</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Vocab<span>Render</span></div>
+  <div class="footer-links">
+    <a href="#">Về chúng tôi</a>
+    <a href="#">Hỗ trợ</a>
+    <a href="#">Điều khoản</a>
+    <a href="#">Liên hệ</a>
+  </div>
+  <div>© 2025 VocabRender</div>
+</footer>
+
+<script>
+  // Chip click fills search
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.hero-search input, .nav-search input').forEach(inp => {
+        inp.value = chip.textContent;
+      });
+      document.querySelector('.hero-search input').focus();
+    });
+  });
+
+  // Save button toggle
+  document.querySelector('.action-save').addEventListener('click', function() {
+    this.textContent = this.textContent.includes('♡') ? '♥ Đã lưu' : '♡ Lưu từ';
+    this.style.background = this.textContent.includes('♥ Đã lưu') ? '#15803d' : '#16a34a';
+  });
+
+  // Intersection observer for cards
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = `fadeUp .5s ${i * 0.08}s ease both`;
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
