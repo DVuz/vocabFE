@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { BookOpen, BookPlus, Grid2x2, LayoutList, Search } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, ArrowRight, BookOpen, BookPlus, Grid2x2, Layers, LayoutList, RotateCcw, Search, Volume2 } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -49,7 +49,7 @@ function Vocabulary() {
 
   const [selected, setSelected] = useState<UserWordRow | null>(null);
   const [searchInput, setSearchInput] = useState(q ?? '');
-  const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'grid' | 'flashcard'>('table');
 
   const { data, isFetching, isError, error } = useVocabularyWords({
     page,
@@ -121,6 +121,14 @@ function Vocabulary() {
             >
               <Grid2x2 size={14} />
               Grid
+            </button>
+            <button
+              onClick={() => setViewMode('flashcard')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all
+                ${viewMode === 'flashcard' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <Layers size={14} />
+              Flashcard
             </button>
           </div>
         </div>
@@ -208,6 +216,11 @@ function Vocabulary() {
           </div>
         </div>
 
+        {/* ── FLASHCARD VIEW (all screens) ── */}
+        {viewMode === 'flashcard' && (
+          <VocabFlashcardView rows={rows} isFetching={isFetching} />
+        )}
+
         {/* ── MOBILE: card list ── */}
         <div className="flex flex-col gap-3 md:hidden">
           {isFetching &&
@@ -244,7 +257,7 @@ function Vocabulary() {
         </div>
 
         {/* ── DESKTOP: grid or table ── */}
-        {viewMode === 'grid' ? (
+        {viewMode === 'flashcard' ? null : viewMode === 'grid' ? (
           <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {isFetching &&
               Array.from({ length: 8 }).map((_, i) => (
@@ -428,10 +441,223 @@ function Vocabulary() {
         )}
 
         {/* Pagination */}
-        {pagination && <PaginationBar pagination={pagination} onPage={goPage} />}
+        {viewMode !== 'flashcard' && pagination && <PaginationBar pagination={pagination} onPage={goPage} />}
+
+        {/* Paginator shown under flashcard view too */}
+        {viewMode === 'flashcard' && pagination && <PaginationBar pagination={pagination} onPage={goPage} />}
 
         {/* Meaning dialog */}
         <MeaningDialog row={selected} open={!!selected} onClose={() => setSelected(null)} />
+      </div>
+    </div>
+  );
+}
+
+// ── Vocab Flashcard View ───────────────────────────────────────────────────
+function playAudio(url: string) {
+  const a = new Audio(url);
+  a.play().catch(() => {});
+}
+
+function VocabFlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFetching: boolean }) {
+  const [index, setIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+
+  // Reset when rows change (page change)
+  useEffect(() => {
+    setIndex(0);
+    setFlipped(false);
+  }, [rows]);
+
+  const card = rows[index];
+
+  const goNext = useCallback(() => {
+    if (index >= rows.length - 1) return;
+    setFlipped(false);
+    setTimeout(() => setIndex(i => i + 1), 150);
+  }, [index, rows.length]);
+
+  const goPrev = useCallback(() => {
+    if (index <= 0) return;
+    setFlipped(false);
+    setTimeout(() => setIndex(i => i - 1), 150);
+  }, [index]);
+
+  const flip = useCallback(() => setFlipped(f => !f), []);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); flip(); }
+      if (e.code === 'ArrowRight' || e.key === 'l' || e.key === 'L') { e.preventDefault(); goNext(); }
+      if (e.code === 'ArrowLeft' || e.key === 'h' || e.key === 'H') { e.preventDefault(); goPrev(); }
+      if ((e.key === 'u' || e.key === 'U') && card?.audio?.uk) playAudio(card.audio.uk);
+      if ((e.key === 'a' || e.key === 'A') && card?.audio?.us) playAudio(card.audio.us);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [flip, goNext, goPrev, card]);
+
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <RotateCcw size={28} className="animate-spin text-emerald-400" />
+      </div>
+    );
+  }
+
+  if (rows.length === 0) {
+    return (
+      <div className="text-center py-20 text-zinc-400">Không có từ nào để hiển thị.</div>
+    );
+  }
+
+  const progress = ((index + 1) / rows.length) * 100;
+
+  return (
+    <div className="flex flex-col items-center gap-6 pb-4">
+      {/* progress */}
+      <div className="w-full flex items-center gap-3">
+        <span className="text-xs text-zinc-400 shrink-0">{index + 1} / {rows.length}</span>
+        <div className="flex-1 h-1.5 bg-zinc-200 rounded-full overflow-hidden">
+          <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${progress}%` }} />
+        </div>
+      </div>
+
+      {/* card */}
+      {card && (
+        <div
+          className="w-full max-w-2xl cursor-pointer select-none"
+          style={{ perspective: '1200px' }}
+          onClick={flip}
+        >
+          <div
+            className="relative w-full transition-transform duration-500"
+            style={{
+              transformStyle: 'preserve-3d',
+              transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              minHeight: '380px',
+            }}
+          >
+            {/* FRONT */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-white border border-zinc-200 shadow-xl flex flex-col items-center justify-center gap-4 px-8 py-10"
+              style={{ backfaceVisibility: 'hidden' }}
+            >
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {card.cefrLevel && (
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded border ${CEFR_CLASS[card.cefrLevel] ?? 'bg-zinc-100 text-zinc-500 border-zinc-200'}`}>
+                    {card.cefrLevel}
+                  </span>
+                )}
+                {card.partOfSpeech && (
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${POS_CLASS[card.partOfSpeech.toLowerCase()] ?? 'bg-zinc-100 text-zinc-500'}`}>
+                    {card.partOfSpeech}
+                  </span>
+                )}
+                {card.status && (
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${STATUS_CLASS[card.status] ?? STATUS_CLASS.new}`}>
+                    {STATUS_LABEL[card.status] ?? card.status}
+                  </span>
+                )}
+              </div>
+              <h2 className="text-5xl font-black text-zinc-900 tracking-tight text-center">{card.word}</h2>
+              <div className="flex flex-wrap gap-3 justify-center">
+                {card.ipa?.uk && (
+                  <div className="flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-xl px-3 py-1.5">
+                    <span className="text-[11px] font-bold text-blue-400 uppercase">UK</span>
+                    <span className="font-mono text-sm text-blue-700">/{card.ipa.uk}/</span>
+                    {card.audio?.uk && (
+                      <button onClick={e => { e.stopPropagation(); playAudio(card.audio.uk!); }} className="text-blue-500 hover:text-blue-700">
+                        <Volume2 size={14} />
+                      </button>
+                    )}
+                  </div>
+                )}
+                {card.ipa?.us && (
+                  <div className="flex items-center gap-2 bg-amber-50 border border-amber-100 rounded-xl px-3 py-1.5">
+                    <span className="text-[11px] font-bold text-amber-400 uppercase">US</span>
+                    <span className="font-mono text-sm text-amber-700">/{card.ipa.us}/</span>
+                    {card.audio?.us && (
+                      <button onClick={e => { e.stopPropagation(); playAudio(card.audio.us!); }} className="text-amber-500 hover:text-amber-700">
+                        <Volume2 size={14} />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+              <p className="text-sm text-zinc-400 mt-1">Nhấn Space hoặc click để xem nghĩa</p>
+            </div>
+
+            {/* BACK */}
+            <div
+              className="absolute inset-0 rounded-3xl bg-white border border-emerald-200 shadow-xl flex flex-col justify-center gap-4 px-8 py-10 overflow-y-auto"
+              style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+            >
+              <div className="flex flex-wrap gap-2 justify-center">
+                {card.cefrLevel && (
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded border ${CEFR_CLASS[card.cefrLevel] ?? 'bg-zinc-100 text-zinc-500 border-zinc-200'}`}>
+                    {card.cefrLevel}
+                  </span>
+                )}
+                {card.partOfSpeech && (
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${POS_CLASS[card.partOfSpeech.toLowerCase()] ?? 'bg-zinc-100 text-zinc-500'}`}>
+                    {card.partOfSpeech}
+                  </span>
+                )}
+              </div>
+              <h3 className="text-2xl font-bold text-zinc-900 text-center">{card.word}</h3>
+              <div className="border-t border-zinc-100 pt-4 space-y-2">
+                <p className="text-base font-semibold text-zinc-800 text-center leading-relaxed">{card.definition}</p>
+                {card.vnDefinition && (
+                  <p className="text-sm text-zinc-500 italic text-center">{card.vnDefinition}</p>
+                )}
+              </div>
+              {card.examples.length > 0 && (
+                <ul className="space-y-1.5 border-t border-zinc-100 pt-3">
+                  {card.examples.slice(0, 2).map((ex, i) => (
+                    <li key={i} className="text-xs text-zinc-500 italic pl-3 border-l-2 border-emerald-200">"{ex}"</li>
+                  ))}
+                </ul>
+              )}
+              <p className="text-sm text-zinc-400 text-center mt-1">→ / L để đến từ tiếp theo</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Buttons */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={goPrev}
+          disabled={index === 0}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-sm font-medium hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
+        >
+          <ArrowLeft size={16} />Trước
+        </button>
+        <button
+          onClick={flip}
+          className="px-6 py-2.5 rounded-xl bg-zinc-800 text-white text-sm font-semibold hover:bg-zinc-700 transition-all shadow-sm"
+        >
+          Lật thẻ
+        </button>
+        <button
+          onClick={goNext}
+          disabled={index >= rows.length - 1}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-sm font-medium hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
+        >
+          Tiếp theo<ArrowRight size={16} />
+        </button>
+      </div>
+
+      {/* Keyboard hints */}
+      <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center">
+        {[['Space', 'Lật thẻ'], ['←/H', 'Quay lại'], ['→/L', 'Tiếp theo'], ['U', 'Nghe UK'], ['A', 'Nghe US']].map(([k, l]) => (
+          <div key={k} className="flex items-center gap-1.5 text-xs text-zinc-500">
+            <kbd className="inline-flex items-center justify-center min-w-7 h-6 px-1.5 rounded bg-white border border-zinc-300 shadow-sm font-mono text-[11px] text-zinc-700">{k}</kbd>
+            <span>{l}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

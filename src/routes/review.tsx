@@ -4,6 +4,7 @@ import {
   ArrowRight,
   BookOpen,
   ClipboardList,
+  Layers,
   Loader2,
   RotateCcw,
   Volume2,
@@ -15,8 +16,11 @@ import {
   STATUS_CLASS,
   STATUS_LABEL,
 } from '../components/vocabulary/constants';
+import type { UserWordRow } from '../components/vocabulary/types';
+import { PaginationBar } from '../components/vocabulary/PaginationBar';
 import type { ReviewCard } from '../hooks/useReviewQueue';
 import { useReviewQueue } from '../hooks/useReviewQueue';
+import { useVocabularyWords } from '../hooks/useVocabularyWords';
 
 export const Route = createFileRoute('/review')({
   component: Review,
@@ -195,9 +199,136 @@ function KbdHint({ keys, label }: { keys: string[]; label: string }) {
   );
 }
 
-// ── Main ───────────────────────────────────────────────────────────────────
-function Review() {
-  const token = localStorage.getItem('access_token') ?? '';
+// ── Vocab-page flashcard runner ────────────────────────────────────────────
+function VocabPageFlashcard({ token, onSwitchToDue }: { token: string; onSwitchToDue: () => void }) {
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(20);
+  const [index, setIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+
+  const { data, isFetching } = useVocabularyWords({ page, pageSize, token });
+  const rows: UserWordRow[] = data?.data ?? [];
+  const pagination = data?.pagination ?? null;
+
+  useEffect(() => { setIndex(0); setFlipped(false); }, [page, rows]);
+
+  const card = rows[index];
+  const goNext = useCallback(() => {
+    if (index >= rows.length - 1) return;
+    setFlipped(false); setTimeout(() => setIndex(i => i + 1), 150);
+  }, [index, rows.length]);
+  const goPrev = useCallback(() => {
+    if (index <= 0) return;
+    setFlipped(false); setTimeout(() => setIndex(i => i - 1), 150);
+  }, [index]);
+  const flip = useCallback(() => setFlipped(f => !f), []);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); flip(); }
+      if (e.code === 'ArrowRight' || e.key === 'l' || e.key === 'L') { e.preventDefault(); goNext(); }
+      if (e.code === 'ArrowLeft' || e.key === 'h' || e.key === 'H') { e.preventDefault(); goPrev(); }
+      if ((e.key === 'u' || e.key === 'U') && card?.audio?.uk) playAudio(card.audio.uk!);
+      if ((e.key === 'a' || e.key === 'A') && card?.audio?.us) playAudio(card.audio.us!);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [flip, goNext, goPrev, card]);
+
+  // Build a ReviewCard-compatible shape from UserWordRow for the existing Flashcard component
+  const reviewCard: ReviewCard | undefined = card
+    ? {
+        userWordId: card.userWordId,
+        wordId: card.wordId,
+        word: card.word,
+        meaningId: card.meaningId,
+        partOfSpeech: card.partOfSpeech,
+        cefrLevel: card.cefrLevel,
+        definition: card.definition,
+        vnDefinition: card.vnDefinition,
+        examples: card.examples,
+        ipa: card.ipa,
+        audio: card.audio,
+        status: card.status,
+      }
+    : undefined;
+
+  const progress = rows.length > 0 ? ((index + 1) / rows.length) * 100 : 0;
+
+  return (
+    <div className="min-h-[calc(100vh-64px)] bg-zinc-50 flex flex-col">
+      {/* Header */}
+      <div className="bg-white border-b border-zinc-200 px-4 sm:px-8 py-4">
+        <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-lg font-bold text-zinc-900">Flashcard — Từ vựng của tôi</h1>
+            <p className="text-xs text-zinc-400">
+              {isFetching ? 'Đang tải...' : `Thẻ ${index + 1} / ${rows.length} (trang ${page})`}
+            </p>
+          </div>
+          <Link to="/review" onClick={onSwitchToDue} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 text-sm font-medium text-zinc-600 hover:bg-zinc-50 transition-colors">
+            <RotateCcw size={14} />Ôn theo lịch
+          </Link>
+        </div>
+      </div>
+
+      {/* Progress */}
+      <div className="h-1.5 bg-zinc-100">
+        <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${progress}%` }} />
+      </div>
+
+      {/* Card area */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 gap-6">
+        {isFetching ? (
+          <Loader2 size={32} className="animate-spin text-emerald-500" />
+        ) : rows.length === 0 ? (
+          <p className="text-zinc-400">Không có từ vựng nào.</p>
+        ) : (
+          <div className="w-full max-w-2xl">
+            {reviewCard && <Flashcard card={reviewCard} flipped={flipped} onFlip={flip} />}
+          </div>
+        )}
+
+        {/* Nav */}
+        <div className="flex items-center gap-3">
+          <button onClick={goPrev} disabled={index === 0}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-sm font-medium hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm">
+            <ArrowLeft size={16} />Trước
+          </button>
+          <button onClick={flip}
+            className="px-6 py-2.5 rounded-xl bg-zinc-800 text-white text-sm font-semibold hover:bg-zinc-700 transition-all shadow-sm">
+            Lật thẻ
+          </button>
+          <button onClick={goNext} disabled={index >= rows.length - 1}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-zinc-600 text-sm font-medium hover:bg-zinc-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm">
+            Tiếp theo<ArrowRight size={16} />
+          </button>
+        </div>
+
+        {/* Keyboard hints */}
+        <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center">
+          {[['Space', 'Lật thẻ'], ['←/H', 'Quay lại'], ['→/L', 'Tiếp theo'], ['U', 'Nghe UK'], ['A', 'Nghe US']].map(([k, l]) => (
+            <div key={k} className="flex items-center gap-1.5 text-xs text-zinc-500">
+              <kbd className="inline-flex items-center justify-center min-w-7 h-7 px-1.5 rounded-md bg-white border border-zinc-300 shadow-sm font-mono text-[11px] text-zinc-700">{k}</kbd>
+              <span>{l}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination to switch pages */}
+        {pagination && (
+          <div className="mt-4">
+            <PaginationBar pagination={pagination} onPage={p => setPage(p)} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Due-today review (extracted so hooks are never called conditionally) ──
+function DueReview({ token, onSwitchMode }: { token: string; onSwitchMode: () => void }) {
   const { data: cards = [], isLoading, isError, refetch } = useReviewQueue(token);
 
   const [index, setIndex] = useState(0);
@@ -223,37 +354,19 @@ function Review() {
 
   const flip = useCallback(() => setFlipped(f => !f), []);
 
-  // Keyboard handler
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-
-      if (e.code === 'Space' || e.code === 'Enter') {
-        e.preventDefault();
-        flip();
-      }
-      if (e.code === 'ArrowRight' || e.key === 'l' || e.key === 'L') {
-        e.preventDefault();
-        goNext();
-      }
-      if (e.code === 'ArrowLeft' || e.key === 'h' || e.key === 'H') {
-        e.preventDefault();
-        goPrev();
-      }
-      // Play UK audio with U key
-      if ((e.key === 'u' || e.key === 'U') && card?.audio.uk) {
-        playAudio(card.audio.uk);
-      }
-      // Play US audio with A key
-      if ((e.key === 'a' || e.key === 'A') && card?.audio.us) {
-        playAudio(card.audio.us);
-      }
+      if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); flip(); }
+      if (e.code === 'ArrowRight' || e.key === 'l' || e.key === 'L') { e.preventDefault(); goNext(); }
+      if (e.code === 'ArrowLeft' || e.key === 'h' || e.key === 'H') { e.preventDefault(); goPrev(); }
+      if ((e.key === 'u' || e.key === 'U') && card?.audio.uk) playAudio(card.audio.uk);
+      if ((e.key === 'a' || e.key === 'A') && card?.audio.us) playAudio(card.audio.us);
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [flip, goNext, goPrev, card]);
 
-  // ── Loading ──
   if (!token) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 text-center px-6">
@@ -295,17 +408,25 @@ function Review() {
           Tuyệt vời! Không còn từ nào cần ôn hôm nay.
         </h2>
         <p className="text-zinc-400 text-sm">Quay lại sau để tiếp tục ôn tập.</p>
-        <Link
-          to="/vocabulary"
-          className="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition-colors"
-        >
-          Xem từ vựng của tôi
-        </Link>
+        <div className="flex gap-3 flex-wrap justify-center">
+          <Link
+            to="/vocabulary"
+            className="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition-colors"
+          >
+            Xem từ vựng của tôi
+          </Link>
+          <button
+            onClick={onSwitchMode}
+            className="flex items-center gap-2 px-5 py-2.5 border border-zinc-300 text-zinc-700 rounded-xl text-sm font-semibold hover:bg-zinc-50 transition-colors"
+          >
+            <Layers size={15} />
+            Ôn theo danh sách
+          </button>
+        </div>
       </div>
     );
   }
 
-  // ── Done screen ──
   if (done) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-6">
@@ -322,11 +443,7 @@ function Review() {
         </div>
         <div className="flex gap-3 flex-wrap justify-center">
           <button
-            onClick={() => {
-              setIndex(0);
-              setFlipped(false);
-              setDone(false);
-            }}
+            onClick={() => { setIndex(0); setFlipped(false); setDone(false); }}
             className="flex items-center gap-2 px-5 py-2.5 border border-zinc-300 text-zinc-700 rounded-xl text-sm font-semibold hover:bg-zinc-50 transition-colors"
           >
             <RotateCcw size={15} />
@@ -357,13 +474,22 @@ function Review() {
               {index + 1} / {cards.length} từ hôm nay
             </p>
           </div>
-          <Link
-            to="/quiz"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 text-sm font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
-          >
-            <ClipboardList size={14} />
-            Chuyển sang kiểm tra
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onSwitchMode}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-sm font-medium text-emerald-700 hover:bg-emerald-100 transition-colors"
+            >
+              <Layers size={14} />
+              Ôn theo danh sách
+            </button>
+            <Link
+              to="/quiz"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 text-sm font-medium text-zinc-600 hover:bg-zinc-50 transition-colors"
+            >
+              <ClipboardList size={14} />
+              Chuyển sang kiểm tra
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -417,4 +543,15 @@ function Review() {
       </div>
     </div>
   );
+}
+
+// ── Main ───────────────────────────────────────────────────────────────────
+function Review() {
+  const token = localStorage.getItem('access_token') ?? '';
+  const [mode, setMode] = useState<'due' | 'vocab'>('due');
+
+  if (mode === 'vocab') {
+    return <VocabPageFlashcard token={token} onSwitchToDue={() => setMode('due')} />;
+  }
+  return <DueReview token={token} onSwitchMode={() => setMode('vocab')} />;
 }
