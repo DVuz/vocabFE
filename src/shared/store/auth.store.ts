@@ -15,6 +15,14 @@ function persistAccessToken(token: string | null) {
   window.localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY)
 }
 
+function restoreAccessToken(): string | null {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  return window.localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)
+}
+
 export interface AuthUser {
   id: number
   email: string
@@ -39,7 +47,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>()(set => ({
-  accessToken: null,
+  accessToken: restoreAccessToken(),
   user: null,
   sessionStatus: 'idle',
   setSession: ({ accessToken, user }) => {
