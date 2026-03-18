@@ -1,5 +1,20 @@
 import { create } from 'zustand'
 
+const ACCESS_TOKEN_STORAGE_KEY = 'access_token'
+
+function persistAccessToken(token: string | null) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  if (token) {
+    window.localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, token)
+    return
+  }
+
+  window.localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY)
+}
+
 export interface AuthUser {
   id: number
   email: string
@@ -27,27 +42,33 @@ export const useAuthStore = create<AuthState>()(set => ({
   accessToken: null,
   user: null,
   sessionStatus: 'idle',
-  setSession: ({ accessToken, user }) =>
+  setSession: ({ accessToken, user }) => {
+    persistAccessToken(accessToken)
     set({
       accessToken,
       user,
       sessionStatus: 'authenticated',
-    }),
+    })
+  },
   setUser: user =>
     set(state => ({
       user,
       sessionStatus: state.accessToken && user ? 'authenticated' : state.sessionStatus,
     })),
-  setAccessToken: token =>
+  setAccessToken: token => {
+    persistAccessToken(token)
     set(state => ({
       accessToken: token,
       sessionStatus: token && state.user ? 'authenticated' : state.sessionStatus,
-    })),
+    }))
+  },
   setSessionStatus: sessionStatus => set({ sessionStatus }),
-  clearSession: () =>
+  clearSession: () => {
+    persistAccessToken(null)
     set({
       accessToken: null,
       user: null,
       sessionStatus: 'unauthenticated',
-    }),
+    })
+  },
 }))
