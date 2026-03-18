@@ -1,0 +1,112 @@
+my-app/
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── package.json
+│
+└── src/
+    ├── app/
+    │   ├── providers/
+    │   │   ├── app-provider.tsx
+    │   │   ├── query-provider.tsx
+    │   │   └── router-provider.tsx
+    │   ├── router/
+    │   │   ├── router.tsx
+    │   │   ├── routeTree.gen.ts     ← AUTO-GENERATED
+    │   │   └── guards.ts
+    │   ├── styles/
+    │   │   ├── globals.css
+    │   │   ├── scrollbar.css
+    │   │   └── shadcn.css
+    │   └── main.tsx
+    │
+    ├── routes/                      ← SHELL ONLY, không có logic
+    │   ├── __root.tsx
+    │   ├── _public.tsx
+    │   ├── _protected.tsx
+    │   ├── login.tsx
+    │   ├── _public/
+    │   │   └── index.tsx
+    │   └── _protected/
+    │       ├── index.tsx
+    │       ├── vocab/
+    │       │   ├── index.tsx
+    │       │   ├── $id.tsx
+    │       │   └── create.tsx
+    │       └── settings.tsx
+    │
+    ├── features/
+    │   ├── auth/
+    │   │   ├── api/
+    │   │   │   └── auth.api.ts
+    │   │   ├── queries/             ← ★ ĐỔI TÊN từ hooks/ (chỉ chứa TanStack Query)
+    │   │   │   ├── auth.queries.ts  ← useQuery hooks + query keys cùng 1 file
+    │   │   │   └── auth.mutations.ts← useMutation hooks riêng
+    │   │   ├── hooks/               ← chỉ còn hooks thuần logic (không query)
+    │   │   │   └── use-auth.ts      ← đọc từ queryClient, không dùng Zustand
+    │   │   ├── store/               ← ★ CHỈ giữ nếu có UI state cần thiết
+    │   │   │   └── auth.store.ts    ← XEM XÉT XÓA (dùng queryClient thay thế)
+    │   │   ├── types/
+    │   │   │   └── auth.types.ts
+    │   │   └── components/
+    │   │       ├── login-form.tsx
+    │   │       └── user-avatar.tsx
+    │   │
+    │   ├── vocab/
+    │   │   ├── api/
+    │   │   │   └── vocab.api.ts
+    │   │   ├── queries/             ← ★ MỚI
+    │   │   │   ├── vocab.queries.ts
+    │   │   │   └── vocab.mutations.ts
+    │   │   ├── hooks/               ← chỉ còn hooks thuần (không query)
+    │   │   │   └── use-vocab-filter.ts
+    │   │   ├── store/
+    │   │   │   └── vocab-filter.store.ts ← Zustand: filter UI state (GIỮ)
+    │   │   ├── types/
+    │   │   │   └── vocab.types.ts
+    │   │   └── components/
+    │   │       ├── vocab-list.tsx
+    │   │       ├── vocab-detail.tsx
+    │   │       ├── vocab-form.tsx
+    │   │       └── vocab-card.tsx
+    │   │
+    │   └── user/
+    │       ├── api/
+    │       │   └── user.api.ts
+    │       ├── queries/             ← ★ MỚI
+    │       │   ├── user.queries.ts
+    │       │   └── user.mutations.ts
+    │       ├── types/
+    │       │   └── user.types.ts
+    │       └── components/
+    │           └── settings-form.tsx
+    │
+    ├── shared/
+    │   ├── api/
+    │   │   ├── http-client.ts
+    │   │   └── api.types.ts         ← ★ XÓA query-keys.ts (chuyển vào từng feature)
+    │   ├── lib/
+    │   │   ├── cn.ts
+    │   │   ├── utils.ts
+    │   │   └── date.ts
+    │   ├── hooks/
+    │   │   ├── use-debounce.ts
+    │   │   └── use-disclosure.ts
+    │   ├── constants/
+    │   │   ├── routes.ts
+    │   │   └── roles.ts
+    │   ├── types/
+    │   │   └── common.types.ts
+    │   └── store/
+    │       └── ui.store.ts          ← Zustand: sidebar, theme, modal toàn cục
+    │
+    ├── design-system/
+    │   ├── ui/
+    │   ├── primitives/
+    │   ├── patterns/
+    │   └── tokens/
+    │
+    └── test/
+        ├── setup.ts
+        ├── mocks/
+        └── utils/
