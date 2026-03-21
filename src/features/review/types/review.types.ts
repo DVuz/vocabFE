@@ -11,7 +11,7 @@ export interface ReviewCard {
   vnDefinition: string | null
   examples: string[]
   ipa: { uk: string | null; us: string | null }
-  audio: { uk: string | null; us: string | null }
+  audio: { uk: string | null; us: string | null; tts?: string | null }
   status: string | null
   currentStreak: number
   intervalDays: number

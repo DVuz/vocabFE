@@ -9,7 +9,7 @@ export interface UserWordRow {
   cefrLevel: string | null
   examples: string[]
   ipa: { uk: string | null; us: string | null }
-  audio: { uk: string | null; us: string | null }
+  audio: { uk: string | null; us: string | null; tts?: string | null }
   status: string | null
   nextReviewAt: string | null
 }

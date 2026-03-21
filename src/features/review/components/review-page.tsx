@@ -38,6 +38,8 @@ function Flashcard({
   flipped: boolean
   onFlip: () => void
 }) {
+  const ttsAudioUrl = card.audio.tts ?? null
+
   return (
     <div
       className="w-full cursor-pointer select-none"
@@ -127,6 +129,23 @@ function Flashcard({
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           <h3 className="text-center text-2xl font-bold text-zinc-900">{card.word}</h3>
+
+          {ttsAudioUrl && (
+            <div className="flex justify-center">
+              <button
+                onClick={event => {
+                  event.stopPropagation()
+                  playAudio(ttsAudioUrl)
+                }}
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
+                aria-label="Nghe nghĩa"
+                title="Nghe nghĩa"
+              >
+                <Volume2 size={14} className="text-emerald-500" />
+                Nghĩa
+              </button>
+            </div>
+          )}
 
           <div className="space-y-2 border-t border-zinc-100 pt-4">
             <p className="text-center text-base font-semibold leading-relaxed text-zinc-800">
@@ -220,6 +239,7 @@ export function ReviewPage() {
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
+      const tts = card?.audio?.tts
       if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
         return
       }
@@ -245,6 +265,10 @@ export function ReviewPage() {
 
       if ((event.key === 'a' || event.key === 'A') && card?.audio.us) {
         playAudio(card.audio.us)
+      }
+
+      if ((event.key === 'm' || event.key === 'M') && tts) {
+        playAudio(tts)
       }
     }
 
@@ -429,6 +453,7 @@ export function ReviewPage() {
               <KbdHint keys={['→', 'L']} label="Tiếp theo" />
               <KbdHint keys={['U']} label="Nghe UK" />
               <KbdHint keys={['A']} label="Nghe US" />
+              <KbdHint keys={['M']} label="Nghe nghĩa" />
             </div>
           </div>
         )}

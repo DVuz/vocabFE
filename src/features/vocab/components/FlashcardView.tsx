@@ -32,12 +32,14 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      const tts = card?.audio?.tts
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
       if (e.code === 'Space') { e.preventDefault(); flip() }
       if (e.key === 'h' || e.key === 'H' || e.key === 'ArrowLeft') { e.preventDefault(); goPrev() }
       if (e.key === 'l' || e.key === 'L' || e.key === 'ArrowRight') { e.preventDefault(); goNext() }
       if ((e.key === 'u' || e.key === 'U') && card?.audio?.uk) playAudio(card.audio.uk)
       if ((e.key === 'a' || e.key === 'A') && card?.audio?.us) playAudio(card.audio.us)
+      if ((e.key === 'm' || e.key === 'M') && tts) playAudio(tts)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -56,6 +58,7 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
   }
 
   const progress = ((index + 1) / rows.length) * 100
+  const ttsAudioUrl = card?.audio?.tts ?? null
 
   return (
     <div className="flex flex-col items-center gap-6 pb-4">
@@ -99,6 +102,7 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
                     {card.partOfSpeech}
                   </span>
                 )}
+                
                 {card.status && (
                   <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${STATUS_CLASS[card.status] ?? 'bg-zinc-50 text-zinc-600 border-zinc-200'}`}>
                     {STATUS_LABEL[card.status] ?? card.status}
@@ -142,6 +146,17 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
               style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
             >
               <h3 className="text-center text-2xl font-bold text-zinc-900">{card.word}</h3>
+              {ttsAudioUrl && (
+                <div className="flex justify-center">
+                  <button
+                    onClick={e => { e.stopPropagation(); playAudio(ttsAudioUrl) }}
+                    className="inline-flex items-center gap-2 rounded-xl border-2 border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
+                  >
+                    <Volume2 size={14} className="text-emerald-500" />
+                    Nghĩa
+                  </button>
+                </div>
+              )}
               <p className="text-center text-base font-semibold leading-relaxed text-zinc-800">{card.definition}</p>
               {card.vnDefinition && (
                 <p className="text-center text-sm italic leading-relaxed text-zinc-500">{card.vnDefinition}</p>
@@ -180,6 +195,7 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
           ['→/L', 'Tiếp theo'],
           ['U', 'Nghe UK'],
           ['A', 'Nghe US'],
+          ['M', 'Nghe nghĩa'],
         ].map(([key, label]) => (
           <div key={key} className="flex items-center gap-1.5 text-xs text-zinc-500">
             <kbd className="inline-flex h-6 min-w-7 items-center justify-center rounded border border-zinc-300 bg-white px-1.5 font-mono text-[11px] text-zinc-700 shadow-sm">

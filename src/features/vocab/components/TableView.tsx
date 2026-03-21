@@ -109,7 +109,7 @@ export function TableView({ rows, isFetching }: { rows: UserWordRow[]; isFetchin
               <TableCell>
                 <div className="space-y-1.5">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <Badge variant="outline" className={`w-fit text-[10px] ${statusClasses(row.status)}`}>
+                    <Badge variant="outline" className={`w-fit text-[10x] ${statusClasses(row.status)}`}>
                       {STATUS_LABEL[row.status ?? 'new'] ?? (row.status ?? 'new')}
                     </Badge>
                     {row.cefrLevel && (
@@ -121,6 +121,11 @@ export function TableView({ rows, isFetching }: { rows: UserWordRow[]; isFetchin
                       </Badge>
                     )}
                     <AddToListPopover meaningId={row.meaningId} />
+                    {row.audio.tts && (
+                      <span className="ml-auto">
+                        <AudioButton url={row.audio.tts} label="" />
+                      </span>
+                    )}
                   </div>
                   <button
                     className="w-full text-left"
