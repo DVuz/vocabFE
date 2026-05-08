@@ -20,7 +20,7 @@ interface SearchSidebarProps {
 
 export function SearchSidebar({ query, setQuery, data, loading, showVN, setShowVN, grouped, posList, onSearch }: SearchSidebarProps) {
   return (
-    <aside className="sticky top-24 flex w-72 shrink-0 flex-col gap-4">
+    <aside className="flex w-full flex-col gap-4 lg:sticky lg:top-24 lg:w-72 lg:shrink-0">
       <form onSubmit={onSearch}>
         <div className="flex items-center overflow-hidden rounded-xl border-2 border-zinc-200 bg-white shadow-sm transition-all focus-within:border-emerald-500">
           <span className="shrink-0 pl-3 text-zinc-400">

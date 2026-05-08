@@ -34,7 +34,7 @@ export function SearchWordPage({
   return (
     <div className="min-h-[calc(100vh-64px)] bg-zinc-50">
       <div className="mx-auto max-w-400 px-4 py-8 sm:px-6 lg:px-10">
-        <div className="flex items-start gap-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
           <SearchSidebar
             query={query} setQuery={setQuery} data={data} loading={loading}
             showVN={showVN} setShowVN={setShowVN} grouped={grouped}
