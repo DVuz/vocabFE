@@ -85,7 +85,7 @@ function Flashcard({
           </h2>
 
           <div className="flex flex-wrap justify-center gap-3">
-            // Audio buttons for UK and US pronunciation
+            
             {card.ipa.uk && (
               <div className="flex items-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-3 py-1.5">
                 <span className="text-[11px] font-bold uppercase text-blue-400">UK</span>
