@@ -1,7 +1,6 @@
 import {
   ChevronDown,
   ChevronUp,
-  FileText,
   LoaderCircle,
   Volume2,
 } from "lucide-react";
