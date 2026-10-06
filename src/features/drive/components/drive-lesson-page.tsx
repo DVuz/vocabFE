@@ -1,15 +1,16 @@
 import {
   ChevronDown,
   ChevronUp,
-  FileAudio,
   FileText,
   LoaderCircle,
   Volume2,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Button } from "../../../components/ui/button";
+import { getAccessToken } from "../../../shared/api";
 import { ROUTES } from "../../../shared/constants/routes";
 import { useDriveContent } from "../hooks/use-drive";
 import type { DriveAudioFile } from "../types/drive.types";
@@ -97,23 +98,82 @@ function parseSections(markdown: string): Section[] {
 }
 
 function AudioPlayer({ audio }: { audio: DriveAudioFile }) {
-  const streamUrl = audio.streamUrl.startsWith("http")
-    ? audio.streamUrl
-    : `${import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000"}${audio.streamUrl}`;
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let objectUrl: string | null = null;
+
+    async function loadAudio() {
+      try {
+        setStatus("loading");
+        const baseUrl =
+          import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000";
+        const url = audio.streamUrl.startsWith("http")
+          ? audio.streamUrl
+          : `${baseUrl}${audio.streamUrl}`;
+        const token = getAccessToken();
+        const response = await fetch(url, {
+          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Audio request failed: ${response.status}`);
+        }
+
+        const contentType = response.headers.get("content-type") ?? "";
+        if (
+          contentType.includes("application/json") ||
+          contentType.includes("text/")
+        ) {
+          throw new Error("Stream endpoint returned an error response.");
+        }
+
+        const blob = await response.blob();
+        objectUrl = URL.createObjectURL(
+          blob.type.startsWith("audio/")
+            ? blob
+            : new Blob([blob], { type: audio.mimeType || "audio/wav" }),
+        );
+        setAudioUrl(objectUrl);
+        setStatus("ready");
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error("Unable to load Drive audio", error);
+          setStatus("error");
+        }
+      }
+    }
+
+    void loadAudio();
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [audio.id, audio.mimeType, audio.streamUrl]);
+
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3">
-      <FileAudio size={19} className="shrink-0 text-slate-400" />
-      <span className="min-w-0 truncate text-sm font-medium text-slate-700">
-        {audio.name}
-      </span>
-      <audio
-        className="ml-auto h-10 min-w-[220px] max-w-full"
-        controls
-        preload="metadata"
-        src={streamUrl}
-      >
-        Your browser does not support audio playback.
-      </audio>
+    <div className="min-w-0">
+      {status === "loading" && (
+        <span className="text-xs text-slate-400">Đang tải audio...</span>
+      )}
+      {status === "error" && (
+        <span className="text-xs text-red-500">Không thể tải audio</span>
+      )}
+      {status === "ready" && audioUrl && (
+        <audio
+          className="h-9 w-full"
+          controls
+          preload="metadata"
+          src={audioUrl}
+        >
+          Your browser does not support audio playback.
+        </audio>
+      )}
     </div>
   );
 }
@@ -156,10 +216,10 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-slate-50/60">
-      <div className="mx-auto grid max-w-[1500px] gap-7 px-5 py-7 lg:grid-cols-[280px_1fr] lg:px-10">
+      <div className="mx-auto grid max-w-[1500px] gap-4 px-3 py-4 sm:gap-6 sm:px-5 sm:py-6 lg:grid-cols-[280px_1fr] lg:gap-7 lg:px-10 lg:py-7">
         <DriveTreeSidebar selectedId={fileId} />
-        <main>
-          <div className="mb-5 flex items-center gap-2 text-sm text-slate-500">
+        <main className="min-w-0">
+          <div className="mb-4 flex items-center gap-1.5 overflow-hidden text-xs text-slate-500 sm:text-sm">
             <Link
               to={ROUTES.DRIVE}
               className="font-medium hover:text-emerald-600"
@@ -171,68 +231,47 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
               {data.name}
             </span>
           </div>
-          <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
-                  <FileText size={23} />
-                </div>
-                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+          <header className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <h1 className="break-words text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                   {data.name.replace(/\.md$/i, "")}
                 </h1>
-                <p className="mt-2 text-sm text-slate-500">
-                  Speaking practice lesson from Google Drive
-                </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">
-                  Speaking Q&A
-                </span>
-                {data.audioFiles.length > 0 && (
-                  <span className="rounded-full bg-sky-50 px-3 py-1.5 text-xs font-bold text-sky-700">
-                    Audio available
-                  </span>
-                )}
-                <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">
-                  {sections.length} questions
-                </span>
-              </div>
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
+                {sections.length} câu hỏi
+              </span>
             </div>
-          </header>
-
-          {data.audioFiles.length > 0 && (
-            <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <div className="mb-3 flex items-center gap-2 px-1">
-                <Volume2 size={17} className="text-emerald-600" />
-                <h2 className="font-bold text-slate-800">Lesson audio</h2>
-              </div>
-              <div className="space-y-3">
+            {data.audioFiles.length > 0 && (
+              <div className="mt-4 border-t border-slate-100 pt-3">
                 {data.audioFiles.map((audio) => (
                   <AudioPlayer key={audio.id} audio={audio} />
                 ))}
               </div>
-            </section>
-          )}
+            )}
+          </header>
 
           {sections.length > 0 ? (
-            <div className="mt-5 space-y-3">
+            <div className="mt-4 space-y-2">
               {sections.map((section, index) => {
                 const open = openIndex === index;
                 return (
                   <article
                     key={`${section.question}-${index}`}
-                    className={`overflow-hidden rounded-2xl border bg-white shadow-sm transition ${open ? "border-emerald-200 shadow-md" : "border-slate-200"}`}
+                    className={`overflow-hidden rounded-xl border bg-white shadow-sm transition ${open ? "border-emerald-200 shadow-md" : "border-slate-200"}`}
                   >
-                    <button
+                    <Button
+                      type="button"
+                      variant="ghost"
                       onClick={() => setOpenIndex(open ? -1 : index)}
-                      className="flex w-full items-center gap-4 px-5 py-4 text-left hover:bg-slate-50"
+                      className="h-auto w-full justify-start gap-3 rounded-none px-3.5 py-3 text-left hover:bg-slate-50"
                     >
                       <span
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${open ? "bg-emerald-600 text-white" : "bg-emerald-50 text-emerald-600"}`}
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${open ? "bg-emerald-600 text-white" : "bg-emerald-50 text-emerald-600"}`}
                       >
                         {index + 1}
                       </span>
-                      <span className="flex-1 font-bold text-slate-800">
+                      <span className="flex-1 text-sm font-bold text-slate-800">
                         {section.question}
                       </span>
                       {open ? (
@@ -240,9 +279,9 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                       ) : (
                         <ChevronDown size={17} className="text-slate-400" />
                       )}
-                    </button>
+                    </Button>
                     {open && (
-                      <div className="border-t border-slate-100 bg-slate-50/60 px-5 py-5 pl-[4.25rem] text-[15px] leading-7 text-slate-600">
+                      <div className="border-t border-slate-100 bg-slate-50/60 px-3.5 py-3 pl-[3.25rem] text-sm leading-6 text-slate-600">
                         <MarkdownContent
                           content={section.answer || "No answer available."}
                         />
