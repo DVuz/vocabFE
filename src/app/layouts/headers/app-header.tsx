@@ -4,6 +4,7 @@ import {
   BookOpen,
   ClipboardList,
   Clock,
+  Folder,
   LogOut,
   Menu,
   RotateCcw,
@@ -96,6 +97,7 @@ export function AppHeader() {
     { to: ROUTES.REVIEW, icon: <RotateCcw size={15} />, label: 'Ôn tập' },
     { to: ROUTES.QUIZ, icon: <ClipboardList size={15} />, label: 'Kiểm tra' },
     { to: ROUTES.REVIEW_HISTORY, icon: <Clock size={15} />, label: 'Lịch sử ôn tập' },
+    { to: ROUTES.DRIVE, icon: <Folder size={15} />, label: 'Bài học Drive' },
     //{ to: ROUTES.ACCESS_TOKEN, icon: <KeyRound size={15} />, label: 'Access token' },
   ] as const
 
