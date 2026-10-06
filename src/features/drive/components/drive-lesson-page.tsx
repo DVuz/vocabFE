@@ -1,7 +1,9 @@
 import {
   ChevronDown,
   ChevronUp,
+  Grid2X2,
   LoaderCircle,
+  List,
   Volume2,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -20,7 +22,17 @@ interface Section {
   answer: string;
 }
 
-function MarkdownContent({ content }: { content: string }) {
+type TableViewMode = "grid" | "row";
+
+function MarkdownContent({
+  content,
+  tableViewMode,
+}: {
+  content: string;
+  tableViewMode: TableViewMode;
+}) {
+  const isGrid = tableViewMode === "grid";
+
   return (
     <div className="markdown-content overflow-x-auto">
       <ReactMarkdown
@@ -39,25 +51,56 @@ function MarkdownContent({ content }: { content: string }) {
             </blockquote>
           ),
           table: ({ children }) => (
-            <table className="my-4 min-w-full border-separate border-spacing-0 overflow-hidden rounded-xl border border-slate-200 text-left text-sm">
+            <table
+              className={
+                isGrid
+                  ? "my-3 grid grid-cols-1 gap-2 border-0 text-left text-sm md:grid-cols-2"
+                  : "my-3 min-w-full border-separate border-spacing-0 overflow-hidden rounded-xl border border-slate-200 text-left text-sm"
+              }
+            >
               {children}
             </table>
           ),
           thead: ({ children }) => (
-            <thead className="bg-emerald-50 text-emerald-900">{children}</thead>
+            <thead className={isGrid ? "hidden" : "bg-emerald-50 text-emerald-900"}>
+              {children}
+            </thead>
           ),
           th: ({ children }) => (
-            <th className="border-b border-slate-200 px-4 py-3 font-bold">
+            <th
+              className={
+                isGrid
+                  ? "hidden"
+                  : "border-b border-slate-200 px-3 py-2 text-xs font-bold uppercase tracking-wide"
+              }
+            >
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="border-b border-slate-100 px-4 py-3 align-top last:border-r-0">
+            <td
+              className={
+                isGrid
+                  ? "min-w-0 px-3 py-2 align-top first:pb-1 first:text-base first:font-bold first:text-slate-900 last:border-l-2 last:border-emerald-300 last:pt-0 last:text-sm last:italic last:leading-relaxed last:text-slate-500"
+                  : "border-b border-slate-100 px-3 py-2 align-top last:border-b-0"
+              }
+            >
               {children}
             </td>
           ),
+          tbody: ({ children }) => (
+            <tbody className={isGrid ? "contents" : ""}>{children}</tbody>
+          ),
           tr: ({ children }) => (
-            <tr className="even:bg-slate-50/70">{children}</tr>
+            <tr
+              className={
+                isGrid
+                  ? "relative grid min-h-[94px] grid-cols-1 content-start rounded-xl border border-slate-200 bg-white px-1 py-2 shadow-sm transition hover:border-emerald-300 hover:shadow-md [&>td:last-child]:mx-1 [&>td:last-child]:mb-1 [&>td:last-child]:pl-2 [&>td:first-child]:pr-2 [&>td:first-child]:pt-1"
+                  : "even:bg-slate-50/70"
+              }
+            >
+              {children}
+            </tr>
           ),
           code: ({ children }) => (
             <code className="rounded-md bg-slate-200/80 px-1.5 py-0.5 text-[0.9em] text-rose-700">
@@ -180,6 +223,7 @@ function AudioPlayer({ audio }: { audio: DriveAudioFile }) {
 export function DriveLessonPage({ fileId }: { fileId: string }) {
   const { data, isLoading, isError, error } = useDriveContent(fileId);
   const [openIndex, setOpenIndex] = useState(0);
+  const [tableViewMode, setTableViewMode] = useState<TableViewMode>("grid");
   const sections = useMemo(
     () => parseSections(data?.content ?? ""),
     [data?.content],
@@ -237,9 +281,31 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                   {data.name.replace(/\.md$/i, "")}
                 </h1>
               </div>
-              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
-                {sections.length} câu hỏi
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="flex rounded-lg border border-slate-200 bg-slate-50 p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setTableViewMode("grid")}
+                    aria-label="Hiển thị dạng lưới"
+                    aria-pressed={tableViewMode === "grid"}
+                    className={`rounded-md p-1.5 transition ${tableViewMode === "grid" ? "bg-white text-emerald-600 shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+                  >
+                    <Grid2X2 size={15} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTableViewMode("row")}
+                    aria-label="Hiển thị dạng hàng"
+                    aria-pressed={tableViewMode === "row"}
+                    className={`rounded-md p-1.5 transition ${tableViewMode === "row" ? "bg-white text-emerald-600 shadow-sm" : "text-slate-400 hover:text-slate-600"}`}
+                  >
+                    <List size={15} />
+                  </button>
+                </div>
+                <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">
+                  {sections.length} câu hỏi
+                </span>
+              </div>
             </div>
             {data.audioFiles.length > 0 && (
               <div className="mt-4 border-t border-slate-100 pt-3">
@@ -283,6 +349,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                       <div className="border-t border-slate-100 bg-slate-50/60 px-3.5 py-3 pl-[3.25rem] text-sm leading-6 text-slate-600">
                         <MarkdownContent
                           content={section.answer || "No answer available."}
+                          tableViewMode={tableViewMode}
                         />
                       </div>
                     )}
@@ -292,7 +359,10 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
             </div>
           ) : (
             <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-[15px] leading-7 text-slate-700 shadow-sm">
-              <MarkdownContent content={data.content} />
+              <MarkdownContent
+                content={data.content}
+                tableViewMode={tableViewMode}
+              />
             </div>
           )}
           <div className="mt-6 flex items-center gap-2 text-xs text-slate-400">
