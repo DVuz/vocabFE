@@ -1,5 +1,5 @@
 import { Link, useNavigate } from '@tanstack/react-router'
-import { BookOpen, BookPlus, Grid2x2, Layers, LayoutList, Search } from 'lucide-react'
+import { BookOpen, BookPlus, FolderOpen, Grid2x2, Layers, LayoutList, Search } from 'lucide-react'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import {
@@ -86,9 +86,15 @@ export function VocabularyPage({ search }: { search: VocabSearch }) {
             </div>
           </div>
 
-          {/* View mode toggle */}
-          <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
-            {(
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              to={ROUTES.WORD_LISTS}
+              className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:text-blue-700"
+            >
+              <FolderOpen size={15} /> Word lists
+            </Link>
+            <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+              {(
               [
                 { key: 'table', icon: LayoutList, label: 'Table' },
                 { key: 'grid', icon: Grid2x2, label: 'Grid' },
@@ -109,6 +115,7 @@ export function VocabularyPage({ search }: { search: VocabSearch }) {
                 <Icon size={14} /> {label}
               </button>
             ))}
+            </div>
           </div>
         </div>
       </div>

@@ -13,14 +13,17 @@ import { Route as LoginRouteImport } from './../routes/login'
 import { Route as PublicRouteImport } from './../routes/_public'
 import { Route as ProtectedRouteImport } from './../routes/_protected'
 import { Route as PublicIndexRouteImport } from './../routes/_public/index'
+import { Route as ProtectedWordListsRouteImport } from './../routes/_protected/word-lists'
 import { Route as ProtectedVocabularyRouteImport } from './../routes/_protected/vocabulary'
 import { Route as ProtectedReviewHistoryRouteImport } from './../routes/_protected/review-history'
 import { Route as ProtectedReviewRouteImport } from './../routes/_protected/review'
 import { Route as ProtectedQuizRouteImport } from './../routes/_protected/quiz'
 import { Route as ProtectedDriveRouteImport } from './../routes/_protected/drive'
 import { Route as ProtectedAccessTokenRouteImport } from './../routes/_protected/access-token'
+import { Route as ProtectedWordListsIndexRouteImport } from './../routes/_protected/word-lists/index'
 import { Route as ProtectedDriveIndexRouteImport } from './../routes/_protected/drive/index'
 import { Route as PublicSearchWordRouteImport } from './../routes/_public/search/$word'
+import { Route as ProtectedWordListsWordListIdRouteImport } from './../routes/_protected/word-lists/$wordListId'
 import { Route as ProtectedDriveFileIdRouteImport } from './../routes/_protected/drive/$fileId'
 
 const LoginRoute = LoginRouteImport.update({
@@ -40,6 +43,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PublicRoute,
+} as any)
+const ProtectedWordListsRoute = ProtectedWordListsRouteImport.update({
+  id: '/word-lists',
+  path: '/word-lists',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 const ProtectedVocabularyRoute = ProtectedVocabularyRouteImport.update({
   id: '/vocabulary',
@@ -71,6 +79,11 @@ const ProtectedAccessTokenRoute = ProtectedAccessTokenRouteImport.update({
   path: '/access-token',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ProtectedWordListsIndexRoute = ProtectedWordListsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProtectedWordListsRoute,
+} as any)
 const ProtectedDriveIndexRoute = ProtectedDriveIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -81,6 +94,12 @@ const PublicSearchWordRoute = PublicSearchWordRouteImport.update({
   path: '/search/$word',
   getParentRoute: () => PublicRoute,
 } as any)
+const ProtectedWordListsWordListIdRoute =
+  ProtectedWordListsWordListIdRouteImport.update({
+    id: '/$wordListId',
+    path: '/$wordListId',
+    getParentRoute: () => ProtectedWordListsRoute,
+  } as any)
 const ProtectedDriveFileIdRoute = ProtectedDriveFileIdRouteImport.update({
   id: '/$fileId',
   path: '/$fileId',
@@ -96,9 +115,12 @@ export interface FileRoutesByFullPath {
   '/review': typeof ProtectedReviewRoute
   '/review-history': typeof ProtectedReviewHistoryRoute
   '/vocabulary': typeof ProtectedVocabularyRoute
+  '/word-lists': typeof ProtectedWordListsRouteWithChildren
   '/drive/$fileId': typeof ProtectedDriveFileIdRoute
+  '/word-lists/$wordListId': typeof ProtectedWordListsWordListIdRoute
   '/search/$word': typeof PublicSearchWordRoute
   '/drive/': typeof ProtectedDriveIndexRoute
+  '/word-lists/': typeof ProtectedWordListsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -109,8 +131,10 @@ export interface FileRoutesByTo {
   '/review-history': typeof ProtectedReviewHistoryRoute
   '/vocabulary': typeof ProtectedVocabularyRoute
   '/drive/$fileId': typeof ProtectedDriveFileIdRoute
+  '/word-lists/$wordListId': typeof ProtectedWordListsWordListIdRoute
   '/search/$word': typeof PublicSearchWordRoute
   '/drive': typeof ProtectedDriveIndexRoute
+  '/word-lists': typeof ProtectedWordListsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,10 +147,13 @@ export interface FileRoutesById {
   '/_protected/review': typeof ProtectedReviewRoute
   '/_protected/review-history': typeof ProtectedReviewHistoryRoute
   '/_protected/vocabulary': typeof ProtectedVocabularyRoute
+  '/_protected/word-lists': typeof ProtectedWordListsRouteWithChildren
   '/_public/': typeof PublicIndexRoute
   '/_protected/drive/$fileId': typeof ProtectedDriveFileIdRoute
+  '/_protected/word-lists/$wordListId': typeof ProtectedWordListsWordListIdRoute
   '/_public/search/$word': typeof PublicSearchWordRoute
   '/_protected/drive/': typeof ProtectedDriveIndexRoute
+  '/_protected/word-lists/': typeof ProtectedWordListsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,9 +166,12 @@ export interface FileRouteTypes {
     | '/review'
     | '/review-history'
     | '/vocabulary'
+    | '/word-lists'
     | '/drive/$fileId'
+    | '/word-lists/$wordListId'
     | '/search/$word'
     | '/drive/'
+    | '/word-lists/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -152,8 +182,10 @@ export interface FileRouteTypes {
     | '/review-history'
     | '/vocabulary'
     | '/drive/$fileId'
+    | '/word-lists/$wordListId'
     | '/search/$word'
     | '/drive'
+    | '/word-lists'
   id:
     | '__root__'
     | '/_protected'
@@ -165,10 +197,13 @@ export interface FileRouteTypes {
     | '/_protected/review'
     | '/_protected/review-history'
     | '/_protected/vocabulary'
+    | '/_protected/word-lists'
     | '/_public/'
     | '/_protected/drive/$fileId'
+    | '/_protected/word-lists/$wordListId'
     | '/_public/search/$word'
     | '/_protected/drive/'
+    | '/_protected/word-lists/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,6 +241,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_protected/word-lists': {
+      id: '/_protected/word-lists'
+      path: '/word-lists'
+      fullPath: '/word-lists'
+      preLoaderRoute: typeof ProtectedWordListsRouteImport
+      parentRoute: typeof ProtectedRoute
     }
     '/_protected/vocabulary': {
       id: '/_protected/vocabulary'
@@ -249,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAccessTokenRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_protected/word-lists/': {
+      id: '/_protected/word-lists/'
+      path: '/'
+      fullPath: '/word-lists/'
+      preLoaderRoute: typeof ProtectedWordListsIndexRouteImport
+      parentRoute: typeof ProtectedWordListsRoute
+    }
     '/_protected/drive/': {
       id: '/_protected/drive/'
       path: '/'
@@ -262,6 +311,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/search/$word'
       preLoaderRoute: typeof PublicSearchWordRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_protected/word-lists/$wordListId': {
+      id: '/_protected/word-lists/$wordListId'
+      path: '/$wordListId'
+      fullPath: '/word-lists/$wordListId'
+      preLoaderRoute: typeof ProtectedWordListsWordListIdRouteImport
+      parentRoute: typeof ProtectedWordListsRoute
     }
     '/_protected/drive/$fileId': {
       id: '/_protected/drive/$fileId'
@@ -287,6 +343,19 @@ const ProtectedDriveRouteWithChildren = ProtectedDriveRoute._addFileChildren(
   ProtectedDriveRouteChildren,
 )
 
+interface ProtectedWordListsRouteChildren {
+  ProtectedWordListsWordListIdRoute: typeof ProtectedWordListsWordListIdRoute
+  ProtectedWordListsIndexRoute: typeof ProtectedWordListsIndexRoute
+}
+
+const ProtectedWordListsRouteChildren: ProtectedWordListsRouteChildren = {
+  ProtectedWordListsWordListIdRoute: ProtectedWordListsWordListIdRoute,
+  ProtectedWordListsIndexRoute: ProtectedWordListsIndexRoute,
+}
+
+const ProtectedWordListsRouteWithChildren =
+  ProtectedWordListsRoute._addFileChildren(ProtectedWordListsRouteChildren)
+
 interface ProtectedRouteChildren {
   ProtectedAccessTokenRoute: typeof ProtectedAccessTokenRoute
   ProtectedDriveRoute: typeof ProtectedDriveRouteWithChildren
@@ -294,6 +363,7 @@ interface ProtectedRouteChildren {
   ProtectedReviewRoute: typeof ProtectedReviewRoute
   ProtectedReviewHistoryRoute: typeof ProtectedReviewHistoryRoute
   ProtectedVocabularyRoute: typeof ProtectedVocabularyRoute
+  ProtectedWordListsRoute: typeof ProtectedWordListsRouteWithChildren
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
@@ -303,6 +373,7 @@ const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedReviewRoute: ProtectedReviewRoute,
   ProtectedReviewHistoryRoute: ProtectedReviewHistoryRoute,
   ProtectedVocabularyRoute: ProtectedVocabularyRoute,
+  ProtectedWordListsRoute: ProtectedWordListsRouteWithChildren,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
