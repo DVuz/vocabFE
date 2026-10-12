@@ -1,5 +1,5 @@
-import { ArrowLeft, ArrowRight, RotateCcw, Volume2 } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, Volume2 } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { UserWordRow } from '../types/vocabulary.types'
 import { CEFR_CLASS, STATUS_CLASS, STATUS_LABEL } from './constants'
@@ -8,6 +8,8 @@ import { playAudio } from './utils'
 export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFetching: boolean }) {
   const [index, setIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
+  const meaningAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [meaningAudioPlaying, setMeaningAudioPlaying] = useState(false)
 
   useEffect(() => {
     setIndex(0)
@@ -45,6 +47,36 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
     return () => window.removeEventListener('keydown', onKey)
   }, [card, flip, goNext, goPrev])
 
+  const ttsAudioUrl = card?.audio?.tts ?? null
+
+  useEffect(() => {
+    meaningAudioRef.current?.pause()
+    meaningAudioRef.current = ttsAudioUrl ? new Audio(ttsAudioUrl) : null
+    setMeaningAudioPlaying(false)
+
+    if (meaningAudioRef.current) {
+      meaningAudioRef.current.onended = () => setMeaningAudioPlaying(false)
+      meaningAudioRef.current.onerror = () => setMeaningAudioPlaying(false)
+    }
+
+    return () => meaningAudioRef.current?.pause()
+  }, [ttsAudioUrl])
+
+  const toggleMeaningAudio = useCallback((event: React.MouseEvent) => {
+    event.stopPropagation()
+    const audio = meaningAudioRef.current
+    if (!audio) return
+
+    if (audio.paused) {
+      void audio.play()
+        .then(() => setMeaningAudioPlaying(true))
+        .catch(() => setMeaningAudioPlaying(false))
+    } else {
+      audio.pause()
+      setMeaningAudioPlaying(false)
+    }
+  }, [])
+
   if (isFetching) {
     return (
       <div className="flex items-center justify-center py-24">
@@ -58,7 +90,6 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
   }
 
   const progress = ((index + 1) / rows.length) * 100
-  const ttsAudioUrl = card?.audio?.tts ?? null
 
   return (
     <div className="flex flex-col items-center gap-6 pb-4">
@@ -146,18 +177,19 @@ export function FlashcardView({ rows, isFetching }: { rows: UserWordRow[]; isFet
               style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
             >
               <h3 className="text-center text-2xl font-bold text-zinc-900">{card.word}</h3>
-              {ttsAudioUrl && (
-                <div className="flex justify-center">
+              <div className="flex items-center gap-3">
+                {ttsAudioUrl && (
                   <button
-                    onClick={e => { e.stopPropagation(); playAudio(ttsAudioUrl) }}
-                    className="inline-flex items-center gap-2 rounded-xl border-2 border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
+                    onClick={toggleMeaningAudio}
+                    title={meaningAudioPlaying ? 'Tạm dừng nghĩa' : 'Nghe nghĩa'}
+                    aria-label={meaningAudioPlaying ? 'Tạm dừng nghĩa' : 'Nghe nghĩa'}
+                    className="flex size-9 shrink-0 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-600 shadow-sm transition-all hover:border-emerald-300 hover:bg-emerald-100 hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                   >
-                    <Volume2 size={14} className="text-emerald-500" />
-                    Nghĩa
+                    {meaningAudioPlaying ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}
                   </button>
-                </div>
-              )}
-              <p className="text-center text-base font-semibold leading-relaxed text-zinc-800">{card.definition}</p>
+                )}
+                <p className="min-w-0 flex-1 text-left text-base font-semibold leading-relaxed text-zinc-800">{card.definition}</p>
+              </div>
               {card.vnDefinition && (
                 <p className="text-center text-sm italic leading-relaxed text-zinc-500">{card.vnDefinition}</p>
               )}
