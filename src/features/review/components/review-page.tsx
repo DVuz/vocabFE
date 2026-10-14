@@ -4,6 +4,7 @@ import {
   ArrowRight,
   BookOpen,
   ClipboardList,
+  Keyboard,
   Layers,
   Loader2,
   RotateCcw,
@@ -23,6 +24,7 @@ import { ROUTES } from '../../../shared/constants/routes'
 import { CEFR_CLASS, STATUS_CLASS, STATUS_LABEL } from '../../vocab/components/constants'
 import { useReviewFlashcards } from '../hooks/use-review-flashcards'
 import type { ReviewCard, ReviewMode } from '../types/review.types'
+import { TypingReviewCard } from './TypingReviewCard'
 
 function playAudio(url: string) {
   const audio = new Audio(url)
@@ -199,6 +201,10 @@ export function ReviewPage() {
 
   const [index, setIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
+  const [practiceMode, setPracticeMode] = useState<'flashcard' | 'typing'>('flashcard')
+  const [typingAnswers, setTypingAnswers] = useState<string[]>([])
+  const [typingChecked, setTypingChecked] = useState<boolean[]>([])
+  const [showVietnamese, setShowVietnamese] = useState(false)
 
   const { isLoggedIn, rows, isFetching, isError, error, refetch } = useReviewFlashcards(mode, {
     page,
@@ -206,9 +212,13 @@ export function ReviewPage() {
     status: status === 'all' ? undefined : status,
   })
 
+  // Reset the session when the review queue or filters change.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIndex(0)
     setFlipped(false)
+    setTypingAnswers(new Array(rows.length).fill(''))
+    setTypingChecked(new Array(rows.length).fill(false))
   }, [mode, page, rows])
 
   const card = rows[index]
@@ -237,6 +247,23 @@ export function ReviewPage() {
   }, [index])
 
   const flip = useCallback(() => setFlipped(value => !value), [])
+
+  const handleTypingAnswer = useCallback((answer: string) => {
+    setTypingAnswers(previous => {
+      const next = [...previous]
+      next[index] = answer
+      return next
+    })
+  }, [index])
+
+  const handleTypingCheck = useCallback(() => {
+    if (!typingAnswers[index]?.trim()) return
+    setTypingChecked(previous => {
+      const next = [...previous]
+      next[index] = true
+      return next
+    })
+  }, [index, typingAnswers])
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -297,22 +324,29 @@ export function ReviewPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-zinc-50">
       <div className="border-b border-slate-200 bg-linear-to-br from-slate-100 to-blue-50">
-        <div className="mx-auto w-full max-w-400 px-4 py-6 sm:px-6 lg:px-10">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="mx-auto w-full max-w-400 px-4 py-3 sm:px-6 lg:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm">
-                <BookOpen size={20} className="text-blue-600" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white shadow-sm">
+                <BookOpen size={16} className="text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight text-slate-800">Review Flashcards</h1>
-                <p className="text-sm text-slate-500">{modeTitle}</p>
+                <h1 className="text-lg font-bold tracking-tight text-slate-800">Review Flashcards</h1>
+                <p className="text-xs text-slate-500">{modeTitle}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+            <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm">
+              <Button
+                variant={practiceMode === 'flashcard' ? 'default' : 'ghost'}
+                className={practiceMode === 'flashcard' ? 'h-8 px-2 text-xs bg-zinc-800 text-white hover:bg-zinc-700' : 'h-8 px-2 text-xs text-zinc-500'}
+                onClick={() => setPracticeMode('flashcard')}
+              >
+                <BookOpen size={14} /> Flashcard
+              </Button>
               <Button
                 variant={mode === 'today' ? 'default' : 'ghost'}
-                className={mode === 'today' ? 'bg-slate-800 text-white hover:bg-slate-700' : 'text-slate-500'}
+                className={mode === 'today' ? 'h-8 px-2 text-xs bg-zinc-800 text-white hover:bg-zinc-700' : 'h-8 px-2 text-xs text-zinc-500'}
                 onClick={() => {
                   setMode('today')
                   setPage(1)
@@ -321,8 +355,19 @@ export function ReviewPage() {
                 <RotateCcw size={14} /> Đến hạn hôm nay
               </Button>
               <Button
+                variant={practiceMode === 'typing' ? 'default' : 'ghost'}
+                className={practiceMode === 'typing' ? 'h-8 px-2 text-xs bg-emerald-600 text-white hover:bg-emerald-500' : 'h-8 px-2 text-xs text-zinc-500'}
+                onClick={() => {
+                  setPracticeMode('typing')
+                  setIndex(0)
+                  setFlipped(false)
+                }}
+              >
+                <Keyboard size={14} /> Nhập từ
+              </Button>
+              <Button
                 variant={mode === 'priority' ? 'default' : 'ghost'}
-                className={mode === 'priority' ? 'bg-emerald-600 text-white hover:bg-emerald-500' : 'text-slate-500'}
+                className={mode === 'priority' ? 'h-8 px-2 text-xs bg-emerald-600 text-white hover:bg-emerald-500' : 'h-8 px-2 text-xs text-zinc-500'}
                 onClick={() => {
                   setMode('priority')
                   setPage(1)
@@ -333,7 +378,7 @@ export function ReviewPage() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-3">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <Select
               value={status}
               onValueChange={value => {
@@ -344,7 +389,7 @@ export function ReviewPage() {
                 setPage(1)
               }}
             >
-              <SelectTrigger className="h-9 w-44 bg-white text-sm">
+              <SelectTrigger className="h-8 w-40 bg-white text-xs">
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
               <SelectContent>
@@ -367,7 +412,7 @@ export function ReviewPage() {
                 setPage(1)
               }}
             >
-              <SelectTrigger className="h-9 w-28 bg-white text-sm">
+              <SelectTrigger className="h-8 w-24 bg-white text-xs">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -381,7 +426,7 @@ export function ReviewPage() {
 
             <Link
               to={ROUTES.QUIZ}
-              className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50"
+              className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-600 hover:bg-zinc-50"
             >
               <ClipboardList size={14} /> Kiểm tra ngay
             </Link>
@@ -389,7 +434,7 @@ export function ReviewPage() {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-440 px-4 py-6 sm:px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-440 px-4 py-3 sm:px-6 lg:px-10">
         {isFetching && (
           <div className="flex items-center justify-center py-24">
             <Loader2 size={30} className="animate-spin text-emerald-500" />
@@ -417,7 +462,7 @@ export function ReviewPage() {
         )}
 
         {!isFetching && !isError && card && (
-          <div className="flex flex-col items-center gap-6 pb-4">
+          <div className="flex flex-col items-center gap-4 pb-4">
             <div className="flex w-full max-w-2xl items-center gap-3">
               <span className="shrink-0 text-xs text-zinc-400">
                 {index + 1} / {rows.length}
@@ -427,35 +472,49 @@ export function ReviewPage() {
               </div>
             </div>
 
-            <div className="w-full max-w-2xl">
-              <Flashcard card={card} flipped={flipped} onFlip={flip} />
-            </div>
+            {practiceMode === 'flashcard' ? (
+              <>
+                <div className="w-full max-w-2xl">
+                  <Flashcard card={card} flipped={flipped} onFlip={flip} />
+                </div>
 
-            <div className="flex items-center gap-3">
-              <Button onClick={goPrev} disabled={index === 0} variant="outline" className="rounded-xl">
-                <ArrowLeft size={16} /> Trước
-              </Button>
-              <Button onClick={flip} className="rounded-xl bg-zinc-800 px-6 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700">
-                Lật thẻ
-              </Button>
-              <Button
-                onClick={goNext}
-                disabled={index >= rows.length - 1}
-                variant="outline"
-                className="rounded-xl"
-              >
-                Tiếp theo <ArrowRight size={16} />
-              </Button>
-            </div>
+                <div className="flex items-center gap-3">
+                  <Button onClick={goPrev} disabled={index === 0} variant="outline" className="rounded-xl">
+                    <ArrowLeft size={16} /> Trước
+                  </Button>
+                  <Button onClick={flip} className="rounded-xl bg-zinc-800 px-6 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700">
+                    Lật thẻ
+                  </Button>
+                  <Button onClick={goNext} disabled={index >= rows.length - 1} variant="outline" className="rounded-xl">
+                    Tiếp theo <ArrowRight size={16} />
+                  </Button>
+                </div>
 
-            <div className="mt-1 flex flex-wrap justify-center gap-x-5 gap-y-2">
-              <KbdHint keys={['Space']} label="Lật thẻ" />
-              <KbdHint keys={['←', 'H']} label="Quay lại" />
-              <KbdHint keys={['→', 'L']} label="Tiếp theo" />
-              <KbdHint keys={['U']} label="Nghe UK" />
-              <KbdHint keys={['A']} label="Nghe US" />
-              <KbdHint keys={['M']} label="Nghe nghĩa" />
-            </div>
+                <div className="mt-1 flex flex-wrap justify-center gap-x-5 gap-y-2">
+                  <KbdHint keys={['Space']} label="Lật thẻ" />
+                  <KbdHint keys={['←', 'H']} label="Quay lại" />
+                  <KbdHint keys={['→', 'L']} label="Tiếp theo" />
+                  <KbdHint keys={['U']} label="Nghe UK" />
+                  <KbdHint keys={['A']} label="Nghe US" />
+                  <KbdHint keys={['M']} label="Nghe nghĩa" />
+                </div>
+              </>
+            ) : (
+              <TypingReviewCard
+                key={card.userWordId}
+                card={card}
+                index={index}
+                answer={typingAnswers[index] ?? ''}
+                checked={typingChecked[index] ?? false}
+                correct={(typingAnswers[index] ?? '').trim().toLowerCase() === card.word.trim().toLowerCase()}
+                showVietnamese={showVietnamese}
+                onToggleVietnamese={() => setShowVietnamese(value => !value)}
+                onAnswer={handleTypingAnswer}
+                onCheck={handleTypingCheck}
+                onPrevious={goPrev}
+                onNext={goNext}
+              />
+            )}
           </div>
         )}
 

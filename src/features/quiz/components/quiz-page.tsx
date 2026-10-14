@@ -42,12 +42,7 @@ export function QuizPage() {
     })
   }, [questionIndex])
 
-  const handleNext = useCallback(async () => {
-    if (questionIndex < questions.length - 1) {
-      setQuestionIndex(v => v + 1)
-      return
-    }
-
+  const submitResults = useCallback(async () => {
     setSubmitting(true)
     try {
       const results = questions.map((q, i) => ({
@@ -66,7 +61,15 @@ export function QuizPage() {
       setSubmitted(true)
       setSubmitting(false)
     }
-  }, [answers, questionIndex, questions])
+  }, [answers, questions])
+
+  const handleNext = useCallback(async () => {
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex(v => v + 1)
+      return
+    }
+    await submitResults()
+  }, [questionIndex, questions.length, submitResults])
 
   const handleRetry = useCallback(() => {
     setQuestionIndex(0)

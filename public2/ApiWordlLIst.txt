@@ -1,714 +1,574 @@
-Api /api/my/word-lists
 {
     "success": true,
     "statusCode": 200,
-    "message": "Lấy danh sách word list thành công",
+    "message": "Lấy danh sách từ cần kiểm tra thành công",
     "data": [
         {
-            "id": 5,
-            "name": "Office",
-            "description": null,
-            "isPublic": false,
-            "createdAt": "2026-10-11T12:02:43.531Z",
-            "wordCount": 18
+            "userWordId": 219,
+            "wordId": 3151,
+            "word": "consistency",
+            "meaningId": 20973,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "the quality of always behaving or performing in a similar way, or of always happening in a similar way:",
+            "vnDefinition": "chất lượng của việc luôn cư xử hoặc thực hiện theo cách tương tự hoặc luôn xảy ra theo cách tương tự:",
+            "examples": [
+                "They've won a few games this season but they lack consistency.",
+                "It's important to show some consistency in your work."
+            ],
+            "ipa": {
+                "uk": "kənˈsɪs.tən.si",
+                "us": "kənˈsɪs.tən.si"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/c/consistency.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/c/consistency.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:36.000Z",
+            "addedAt": "2026-07-01T16:22:33.521Z"
         },
         {
-            "id": 6,
-            "name": "Personnel",
-            "description": null,
-            "isPublic": false,
-            "createdAt": "2026-10-11T12:04:45.739Z",
-            "wordCount": 12
+            "userWordId": 220,
+            "wordId": 185,
+            "word": "attend",
+            "meaningId": 1067,
+            "partOfSpeech": "verb",
+            "cefrLevel": "B1",
+            "definition": "to go to an event, place, etc.:",
+            "vnDefinition": "đi đến một sự kiện, địa điểm, v.v.:",
+            "examples": [
+                "Over two hundred people attended the funeral.",
+                "The meeting is on the fifth and we're hoping everyone will attend."
+            ],
+            "ipa": {
+                "uk": "əˈtend",
+                "us": "əˈtend"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/attend.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/attend.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:36.000Z",
+            "addedAt": "2026-10-04T04:45:00.518Z"
+        },
+        {
+            "userWordId": 221,
+            "wordId": 2253,
+            "word": "schedule",
+            "meaningId": 14816,
+            "partOfSpeech": "verb",
+            "cefrLevel": "B2",
+            "definition": "to arrange that an event or activity will happen at a particular time:",
+            "vnDefinition": "sắp xếp một sự kiện hoặc hoạt động sẽ xảy ra tại một thời điểm cụ thể:",
+            "examples": [
+                "The meeting has been scheduled for tomorrow afternoon.",
+                "The flight is scheduled to arrive at 8.45, but it's running 20 minutes late."
+            ],
+            "ipa": {
+                "uk": "ˈʃedʒ.uːl",
+                "us": "ˈskedʒ.uːl"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/schedule.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/schedule.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:37.000Z",
+            "addedAt": "2026-10-04T04:46:35.329Z"
+        },
+        {
+            "userWordId": 222,
+            "wordId": 16039,
+            "word": "reschedule",
+            "meaningId": 45108,
+            "partOfSpeech": "verb",
+            "cefrLevel": null,
+            "definition": "to arrange for something to happen at a different time from the one that was previously planned",
+            "vnDefinition": "sắp xếp cho một việc gì đó xảy ra vào một thời điểm khác với thời điểm đã được lên kế hoạch trước đó",
+            "examples": [
+                "The press conference had to be rescheduled for March 19."
+            ],
+            "ipa": {
+                "uk": "ˌriːˈʃedjuːl",
+                "us": "ˌriːˈʃedjuːl"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://www.ldoceonline.com/media/english/breProns/ld41reschedule.mp3?version=1.2.93",
+                "us": "https://www.ldoceonline.com/media/english/ameProns/reschedule.mp3?version=1.2.93"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:37.000Z",
+            "addedAt": "2026-10-04T04:47:19.546Z"
+        },
+        {
+            "userWordId": 223,
+            "wordId": 64,
+            "word": "agenda",
+            "meaningId": 419,
+            "partOfSpeech": "noun",
+            "cefrLevel": "C1",
+            "definition": "a list of matters to be discussed at a meeting:",
+            "vnDefinition": "Danh sách các vấn đề sẽ được thảo luận tại cuộc họp:",
+            "examples": [
+                "There were several important items on the agenda.",
+                "The question of security is high on the agenda for this afternoon's meeting."
+            ],
+            "ipa": {
+                "uk": "əˈdʒen.də",
+                "us": "əˈdʒen.də"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/agenda.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/agenda.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:37.000Z",
+            "addedAt": "2026-10-04T04:48:36.861Z"
+        },
+        {
+            "userWordId": 224,
+            "wordId": 537,
+            "word": "conference",
+            "meaningId": 3618,
+            "partOfSpeech": "noun",
+            "cefrLevel": "B1",
+            "definition": "an event, sometimes lasting a few days, at which there is a group of talks on a particular subject, or a meeting in which especially business matters are discussed formally:",
+            "vnDefinition": "một sự kiện, đôi khi kéo dài vài ngày, trong đó có một nhóm thảo luận về một chủ đề cụ thể, hoặc một cuộc họp trong đó các vấn đề kinh doanh đặc biệt được thảo luận một cách chính thức:",
+            "examples": [
+                "a conference on women's rights",
+                "They frequently hold conferences at that hotel.",
+                "I'm speaking at/attending a conference next week."
+            ],
+            "ipa": {
+                "uk": "ˈkɒn.fər.əns",
+                "us": "ˈkɑːn.fɚ.əns"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/c/conference.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/c/conference.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:38.000Z",
+            "addedAt": "2026-10-04T04:56:33.616Z"
+        },
+        {
+            "userWordId": 225,
+            "wordId": 5229,
+            "word": "deadline",
+            "meaningId": 26259,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "a date or time by which you have to do or complete something",
+            "vnDefinition": "ngày hoặc giờ mà bạn phải làm hoặc hoàn thành việc gì đó",
+            "examples": [
+                "He missed the deadline for applications.",
+                "It has to be in before the deadline of July 1st.",
+                "I'm always working under pressure to meet deadlines (=finish something on time)."
+            ],
+            "ipa": {
+                "uk": "ˈdedlaɪn",
+                "us": "ˈdedlaɪn"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/d/deadline.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/d/deadline.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:39.000Z",
+            "addedAt": "2026-10-04T05:12:19.812Z"
+        },
+        {
+            "userWordId": 226,
+            "wordId": 2523,
+            "word": "submit",
+            "meaningId": 16957,
+            "partOfSpeech": "verb",
+            "cefrLevel": null,
+            "definition": "to formally send a document, plan, etc. to a person or group in authority so that they can make a decision about it:",
+            "vnDefinition": "chính thức gửi một tài liệu, kế hoạch, v.v. cho một người hoặc một nhóm có thẩm quyền để họ có thể đưa ra quyết định về việc đó:",
+            "examples": [
+                "The consortium has yet to submit a bid.",
+                "They submitted the report after the retailer said that it might choose a replacement ad agency last year.",
+                "Applications must be submitted by December 5."
+            ],
+            "ipa": {
+                "uk": "səbˈmɪt",
+                "us": "səbˈmɪt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/submit.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/submit.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:39.000Z",
+            "addedAt": "2026-10-04T05:12:41.949Z"
+        },
+        {
+            "userWordId": 227,
+            "wordId": 8275,
+            "word": "memo",
+            "meaningId": 32601,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "a short official note to another person in the same company or organization",
+            "vnDefinition": "một thông báo chính thức ngắn cho người khác trong cùng công ty hoặc tổ chức",
+            "examples": [
+                "I sent him a memo reminding him about the meeting.",
+                "a memo from the managing director to all heads of department"
+            ],
+            "ipa": {
+                "uk": "ˈmeməʊ",
+                "us": "ˈmeməʊ"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/m/memo.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/m/memo.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:39.000Z",
+            "addedAt": "2026-10-04T05:12:56.746Z"
+        },
+        {
+            "userWordId": 228,
+            "wordId": 110,
+            "word": "announcement",
+            "meaningId": 656,
+            "partOfSpeech": "noun",
+            "cefrLevel": "B1",
+            "definition": "something that someone says officially, giving information about something:",
+            "vnDefinition": "điều gì đó mà ai đó nói một cách chính thức, cung cấp thông tin về điều gì đó:",
+            "examples": [
+                "The president made an unexpected announcement this morning."
+            ],
+            "ipa": {
+                "uk": "əˈnaʊns.mənt",
+                "us": "əˈnaʊns.mənt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/announcement.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/announcement.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:40.000Z",
+            "addedAt": "2026-10-04T05:13:04.444Z"
+        },
+        {
+            "userWordId": 229,
+            "wordId": 3047,
+            "word": "supervisor",
+            "meaningId": 19874,
+            "partOfSpeech": "noun",
+            "cefrLevel": "C1",
+            "definition": "a person whose job is to supervise someone or something",
+            "vnDefinition": "một người có công việc là giám sát ai đó hoặc một cái gì đó",
+            "examples": [],
+            "ipa": {
+                "uk": "ˈsuː.pə.vaɪ.zər",
+                "us": "ˈsuː.pɚ.vaɪ.zɚ"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/supervisor.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/supervisor.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:40.000Z",
+            "addedAt": "2026-10-04T05:13:08.531Z"
+        },
+        {
+            "userWordId": 230,
+            "wordId": 700,
+            "word": "department",
+            "meaningId": 4649,
+            "partOfSpeech": "noun",
+            "cefrLevel": "A2",
+            "definition": "a part of an organization such as a school, business, or government that deals with a particular area of study or work:",
+            "vnDefinition": "một bộ phận của một tổ chức như trường học, doanh nghiệp hoặc chính phủ liên quan đến một lĩnh vực học tập hoặc công việc cụ thể:",
+            "examples": [
+                "the Department of Health and Social Security",
+                "She is a professor in the chemistry department/the department of chemistry.",
+                "The sales department is/are having a Christmas party this week."
+            ],
+            "ipa": {
+                "uk": "dɪˈpɑːt.mənt",
+                "us": "dɪˈpɑːrt.mənt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/d/department.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/d/department.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:40.000Z",
+            "addedAt": "2026-10-04T05:13:17.992Z"
+        },
+        {
+            "userWordId": 231,
+            "wordId": 3967,
+            "word": "headquarters",
+            "meaningId": 23198,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "the main building or offices used by a large company or organization",
+            "vnDefinition": "",
+            "examples": [
+                "the headquarters of the United Nations"
+            ],
+            "ipa": {
+                "uk": "ˈhedˌkwɔːtəz, ˌhedˈkwɔːtəz",
+                "us": "ˈhedˌkwɔːtəz, ˌhedˈkwɔːtəz"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/h/headquarters.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/h/headquarters.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:41.000Z",
+            "addedAt": "2026-10-04T05:14:00.667Z"
+        },
+        {
+            "userWordId": 232,
+            "wordId": 3937,
+            "word": "assign",
+            "meaningId": 23113,
+            "partOfSpeech": "verb",
+            "cefrLevel": null,
+            "definition": "to give someone a particular job or make them responsible for a particular person or thing",
+            "vnDefinition": "giao cho ai đó một công việc cụ thể hoặc khiến họ chịu trách nhiệm về một người hoặc vật cụ thể",
+            "examples": [
+                "Jan’s been assigned to the Asian Affairs Bureau.",
+                "Madison was assigned to investigate a balloon accident.",
+                "Assign each student a partner."
+            ],
+            "ipa": {
+                "uk": "əˈsaɪn",
+                "us": "əˈsaɪn"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/assign.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/assign.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:41.000Z",
+            "addedAt": "2026-10-04T05:14:22.249Z"
+        },
+        {
+            "userWordId": 233,
+            "wordId": 16040,
+            "word": "photocopier",
+            "meaningId": 45110,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "a machine that makes photographic copies of documents",
+            "vnDefinition": "một máy tạo ra các bản sao ảnh của tài liệu",
+            "examples": [],
+            "ipa": {
+                "uk": "ˈfəʊtəʊˌkɒpiə",
+                "us": "ˈfəʊtəʊˌkɒpiə"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://www.ldoceonline.com/media/english/breProns/photocopier0205.mp3?version=1.2.93",
+                "us": "https://www.ldoceonline.com/media/english/ameProns/photocopier.mp3?version=1.2.93"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:41.000Z",
+            "addedAt": "2026-10-04T05:14:27.141Z"
+        },
+        {
+            "userWordId": 234,
+            "wordId": 3107,
+            "word": "applicant",
+            "meaningId": 20118,
+            "partOfSpeech": "noun",
+            "cefrLevel": null,
+            "definition": "someone who has applied for a job, a place on a course, etc.:",
+            "vnDefinition": "ai đó đã nộp đơn xin việc, một vị trí trong một khóa học, v.v.:",
+            "examples": [
+                "Many applicants simply don't meet hiring requirements.",
+                "The course is popular - it has five applicants for every place.",
+                "Successful applicants will be notified in writing."
+            ],
+            "ipa": {
+                "uk": "ˈæp.lɪ.kənt",
+                "us": "ˈæp.lə.kənt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/applicant.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/applicant.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:42.000Z",
+            "addedAt": "2026-10-04T05:15:01.674Z"
+        },
+        {
+            "userWordId": 235,
+            "wordId": 2054,
+            "word": "qualification",
+            "meaningId": 13359,
+            "partOfSpeech": "noun",
+            "cefrLevel": "B1",
+            "definition": "an official record showing that you have finished a training course or have the necessary skills, etc.:",
+            "vnDefinition": "hồ sơ chính thức cho thấy bạn đã hoàn thành khóa đào tạo hoặc có các kỹ năng cần thiết, v.v.:",
+            "examples": [
+                "You'll never get a good job if you don't have any qualifications.",
+                "Do you have any teaching/legal/medical/secretarial/academic qualifications?"
+            ],
+            "ipa": {
+                "uk": "ˌkwɒl.ɪ.fɪˈkeɪ.ʃən",
+                "us": "ˌkwɑː.lə.fəˈkeɪ.ʃən"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/q/qualification.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/q/qualification.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:42.000Z",
+            "addedAt": "2026-10-04T05:15:35.168Z"
+        },
+        {
+            "userWordId": 236,
+            "wordId": 2164,
+            "word": "requirement",
+            "meaningId": 14110,
+            "partOfSpeech": "noun",
+            "cefrLevel": "B2",
+            "definition": "something that you must do, or something you need:",
+            "vnDefinition": "điều gì đó bạn phải làm hoặc điều gì đó bạn cần:",
+            "examples": [
+                "A good degree is a minimum requirement for many jobs.",
+                "It is a legal requirement that you have insurance for your car.",
+                "Students who fail to meet the requirements (of the course) will fail."
+            ],
+            "ipa": {
+                "uk": "rɪˈkwaɪə.mənt",
+                "us": "rɪˈkwaɪr.mənt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/r/requirement.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/r/requirement.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:43.000Z",
+            "addedAt": "2026-10-04T05:15:38.438Z"
+        },
+        {
+            "userWordId": 237,
+            "wordId": 6615,
+            "word": "recruit",
+            "meaningId": 29411,
+            "partOfSpeech": "verb",
+            "cefrLevel": null,
+            "definition": "to find new people to work in a company, join an organization, do a job etc",
+            "vnDefinition": "",
+            "examples": [
+                "We’re having difficulty recruiting enough qualified staff.",
+                "Many government officials were recruited from private industry."
+            ],
+            "ipa": {
+                "uk": "rɪˈkruːt",
+                "us": "rɪˈkruːt"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/r/recruit.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/r/recruit.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:43.000Z",
+            "addedAt": "2026-10-04T05:15:52.504Z"
+        },
+        {
+            "userWordId": 238,
+            "wordId": 2233,
+            "word": "salary",
+            "meaningId": 14669,
+            "partOfSpeech": "noun",
+            "cefrLevel": "B1",
+            "definition": "a fixed amount of money agreed every year as pay for an employee, usually paid directly into his or her bank account every month:",
+            "vnDefinition": "một khoản tiền cố định được thỏa thuận hàng năm để trả cho nhân viên, thường được trả trực tiếp vào tài khoản ngân hàng của người đó hàng tháng:",
+            "examples": [
+                "an annual salary of £40,000",
+                "His net monthly salary is €2,500.",
+                "She's on quite a good/decent salary in her present job."
+            ],
+            "ipa": {
+                "uk": "ˈsæl.ər.i",
+                "us": "ˈsæl.ɚ.i"
+            },
+            "audio": {
+                "tts": null,
+                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/salary.mp3",
+                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/salary.mp3"
+            },
+            "status": "new",
+            "currentStreak": 0,
+            "intervalDays": 1,
+            "nextReviewAt": "2026-10-11T19:07:43.000Z",
+            "addedAt": "2026-10-04T05:16:06.684Z"
         }
-    ]
-}
-
-Apip /api/my/word-list-iterms
-{
-    "success": true,
-    "statusCode": 200,
-    "message": "Lấy danh sách word list item thành công",
-    "data": [
-        {
-            "id": 44,
-            "listId": 6,
-            "wordMeaningId": 45112,
-            "addedAt": "2026-10-11T12:05:53.695Z",
-            "wordMeaning": {
-                "id": 45112,
-                "definition": "a piece of paper with information, which is given to people who are attending a lesson, meeting etc",
-                "vnDefinition": "một mảnh giấy có thông tin, được đưa cho những người đang tham dự một bài học, cuộc họp, v.v.",
-                "word": {
-                    "word": "handout"
-                }
-            }
-        },
-        {
-            "id": 43,
-            "listId": 6,
-            "wordMeaningId": 5012,
-            "addedAt": "2026-10-11T12:05:50.400Z",
-            "wordMeaning": {
-                "id": 5012,
-                "definition": "to give something out to several people, or to spread or supply something:",
-                "vnDefinition": "đưa cái gì đó cho nhiều người, hoặc để truyền bá hay cung cấp cái gì đó:",
-                "word": {
-                    "word": "distribute"
-                }
-            }
-        },
-        {
-            "id": 41,
-            "listId": 5,
-            "wordMeaningId": 5505,
-            "addedAt": "2026-10-11T12:05:38.996Z",
-            "wordMeaning": {
-                "id": 5505,
-                "definition": "a device like a box that moves up and down, carrying people or goods from one floor of a building to another or taking people up and down underground in a mine",
-                "vnDefinition": "một thiết bị giống như một chiếc hộp di chuyển lên xuống, chở người hoặc hàng hóa từ tầng này sang tầng khác của tòa nhà hoặc đưa người lên xuống dưới lòng đất trong hầm mỏ",
-                "word": {
-                    "word": "elevator"
-                }
-            }
-        },
-        {
-            "id": 40,
-            "listId": 6,
-            "wordMeaningId": 5505,
-            "addedAt": "2026-10-11T12:05:36.760Z",
-            "wordMeaning": {
-                "id": 5505,
-                "definition": "a device like a box that moves up and down, carrying people or goods from one floor of a building to another or taking people up and down underground in a mine",
-                "vnDefinition": "một thiết bị giống như một chiếc hộp di chuyển lên xuống, chở người hoặc hàng hóa từ tầng này sang tầng khác của tòa nhà hoặc đưa người lên xuống dưới lòng đất trong hầm mỏ",
-                "word": {
-                    "word": "elevator"
-                }
-            }
-        },
-        {
-            "id": 39,
-            "listId": 6,
-            "wordMeaningId": 3285,
-            "addedAt": "2026-10-11T12:05:34.417Z",
-            "wordMeaning": {
-                "id": 3285,
-                "definition": "a person that you work with:",
-                "vnDefinition": "một người mà bạn làm việc cùng:",
-                "word": {
-                    "word": "colleague"
-                }
-            }
-        },
-        {
-            "id": 37,
-            "listId": 6,
-            "wordMeaningId": 32428,
-            "addedAt": "2026-10-11T12:05:27.162Z",
-            "wordMeaning": {
-                "id": 32428,
-                "definition": "to change the date or time of a planned event or action to a later one",
-                "vnDefinition": "để thay đổi ngày hoặc giờ của một sự kiện hoặc hành động đã lên kế hoạch thành một sự kiện sau đó",
-                "word": {
-                    "word": "postpone"
-                }
-            }
-        },
-        {
-            "id": 34,
-            "listId": 6,
-            "wordMeaningId": 14251,
-            "addedAt": "2026-10-11T12:05:15.522Z",
-            "wordMeaning": {
-                "id": 14251,
-                "definition": "to leave your job or stop working because of old age or ill health:",
-                "vnDefinition": "rời bỏ công việc của bạn hoặc ngừng làm việc vì tuổi già hoặc sức khỏe kém:",
-                "word": {
-                    "word": "retire"
-                }
-            }
-        },
-        {
-            "id": 33,
-            "listId": 6,
-            "wordMeaningId": 30815,
-            "addedAt": "2026-10-11T12:05:13.273Z",
-            "wordMeaning": {
-                "id": 30815,
-                "definition": "to officially announce that you have decided to leave your job or an organization",
-                "vnDefinition": "",
-                "word": {
-                    "word": "resign"
-                }
-            }
-        },
-        {
-            "id": 32,
-            "listId": 6,
-            "wordMeaningId": 25644,
-            "addedAt": "2026-10-11T12:05:11.753Z",
-            "wordMeaning": {
-                "id": 25644,
-                "definition": "the type of activity or subject that a person or organization seems most interested in and gives most attention to",
-                "vnDefinition": "loại hoạt động hoặc chủ đề mà một người hoặc tổ chức có vẻ quan tâm và chú ý nhất",
-                "word": {
-                    "word": "orientation"
-                }
-            }
-        },
-        {
-            "id": 30,
-            "listId": 6,
-            "wordMeaningId": 19727,
-            "addedAt": "2026-10-11T12:05:06.038Z",
-            "wordMeaning": {
-                "id": 19727,
-                "definition": "the process or fact of giving someone a higher or more important job:",
-                "vnDefinition": "quá trình hoặc thực tế giao cho ai đó một công việc cao hơn hoặc quan trọng hơn:",
-                "word": {
-                    "word": "promotion"
-                }
-            }
-        },
-        {
-            "id": 29,
-            "listId": 6,
-            "wordMeaningId": 14669,
-            "addedAt": "2026-10-11T12:05:02.757Z",
-            "wordMeaning": {
-                "id": 14669,
-                "definition": "a fixed amount of money agreed every year as pay for an employee, usually paid directly into his or her bank account every month:",
-                "vnDefinition": "một khoản tiền cố định được thỏa thuận hàng năm để trả cho nhân viên, thường được trả trực tiếp vào tài khoản ngân hàng của người đó hàng tháng:",
-                "word": {
-                    "word": "salary"
-                }
-            }
-        },
-        {
-            "id": 28,
-            "listId": 6,
-            "wordMeaningId": 29411,
-            "addedAt": "2026-10-11T12:04:59.216Z",
-            "wordMeaning": {
-                "id": 29411,
-                "definition": "to find new people to work in a company, join an organization, do a job etc",
-                "vnDefinition": "",
-                "word": {
-                    "word": "recruit"
-                }
-            }
-        },
-        {
-            "id": 25,
-            "listId": 5,
-            "wordMeaningId": 14110,
-            "addedAt": "2026-10-11T12:04:48.945Z",
-            "wordMeaning": {
-                "id": 14110,
-                "definition": "something that you must do, or something you need:",
-                "vnDefinition": "điều gì đó bạn phải làm hoặc điều gì đó bạn cần:",
-                "word": {
-                    "word": "requirement"
-                }
-            }
-        },
-        {
-            "id": 24,
-            "listId": 6,
-            "wordMeaningId": 14110,
-            "addedAt": "2026-10-11T12:04:46.049Z",
-            "wordMeaning": {
-                "id": 14110,
-                "definition": "something that you must do, or something you need:",
-                "vnDefinition": "điều gì đó bạn phải làm hoặc điều gì đó bạn cần:",
-                "word": {
-                    "word": "requirement"
-                }
-            }
-        },
-        {
-            "id": 23,
-            "listId": 5,
-            "wordMeaningId": 13359,
-            "addedAt": "2026-10-11T12:04:09.107Z",
-            "wordMeaning": {
-                "id": 13359,
-                "definition": "an official record showing that you have finished a training course or have the necessary skills, etc.:",
-                "vnDefinition": "hồ sơ chính thức cho thấy bạn đã hoàn thành khóa đào tạo hoặc có các kỹ năng cần thiết, v.v.:",
-                "word": {
-                    "word": "qualification"
-                }
-            }
-        },
-        {
-            "id": 22,
-            "listId": 5,
-            "wordMeaningId": 20118,
-            "addedAt": "2026-10-11T12:04:05.713Z",
-            "wordMeaning": {
-                "id": 20118,
-                "definition": "someone who has applied for a job, a place on a course, etc.:",
-                "vnDefinition": "ai đó đã nộp đơn xin việc, một vị trí trong một khóa học, v.v.:",
-                "word": {
-                    "word": "applicant"
-                }
-            }
-        },
-        {
-            "id": 21,
-            "listId": 5,
-            "wordMeaningId": 45110,
-            "addedAt": "2026-10-11T12:04:04.031Z",
-            "wordMeaning": {
-                "id": 45110,
-                "definition": "a machine that makes photographic copies of documents",
-                "vnDefinition": "một máy tạo ra các bản sao ảnh của tài liệu",
-                "word": {
-                    "word": "photocopier"
-                }
-            }
-        },
-        {
-            "id": 20,
-            "listId": 5,
-            "wordMeaningId": 23113,
-            "addedAt": "2026-10-11T12:04:02.234Z",
-            "wordMeaning": {
-                "id": 23113,
-                "definition": "to give someone a particular job or make them responsible for a particular person or thing",
-                "vnDefinition": "giao cho ai đó một công việc cụ thể hoặc khiến họ chịu trách nhiệm về một người hoặc vật cụ thể",
-                "word": {
-                    "word": "assign"
-                }
-            }
-        },
-        {
-            "id": 19,
-            "listId": 5,
-            "wordMeaningId": 23198,
-            "addedAt": "2026-10-11T12:03:59.932Z",
-            "wordMeaning": {
-                "id": 23198,
-                "definition": "the main building or offices used by a large company or organization",
-                "vnDefinition": "",
-                "word": {
-                    "word": "headquarters"
-                }
-            }
-        },
-        {
-            "id": 15,
-            "listId": 5,
-            "wordMeaningId": 4649,
-            "addedAt": "2026-10-11T12:03:43.120Z",
-            "wordMeaning": {
-                "id": 4649,
-                "definition": "a part of an organization such as a school, business, or government that deals with a particular area of study or work:",
-                "vnDefinition": "một bộ phận của một tổ chức như trường học, doanh nghiệp hoặc chính phủ liên quan đến một lĩnh vực học tập hoặc công việc cụ thể:",
-                "word": {
-                    "word": "department"
-                }
-            }
-        },
-        {
-            "id": 14,
-            "listId": 5,
-            "wordMeaningId": 19874,
-            "addedAt": "2026-10-11T12:03:41.672Z",
-            "wordMeaning": {
-                "id": 19874,
-                "definition": "a person whose job is to supervise someone or something",
-                "vnDefinition": "một người có công việc là giám sát ai đó hoặc một cái gì đó",
-                "word": {
-                    "word": "supervisor"
-                }
-            }
-        },
-        {
-            "id": 13,
-            "listId": 5,
-            "wordMeaningId": 656,
-            "addedAt": "2026-10-11T12:03:39.991Z",
-            "wordMeaning": {
-                "id": 656,
-                "definition": "something that someone says officially, giving information about something:",
-                "vnDefinition": "điều gì đó mà ai đó nói một cách chính thức, cung cấp thông tin về điều gì đó:",
-                "word": {
-                    "word": "announcement"
-                }
-            }
-        },
-        {
-            "id": 11,
-            "listId": 5,
-            "wordMeaningId": 32601,
-            "addedAt": "2026-10-11T12:03:36.190Z",
-            "wordMeaning": {
-                "id": 32601,
-                "definition": "a short official note to another person in the same company or organization",
-                "vnDefinition": "một thông báo chính thức ngắn cho người khác trong cùng công ty hoặc tổ chức",
-                "word": {
-                    "word": "memo"
-                }
-            }
-        },
-        {
-            "id": 10,
-            "listId": 5,
-            "wordMeaningId": 16957,
-            "addedAt": "2026-10-11T12:03:33.322Z",
-            "wordMeaning": {
-                "id": 16957,
-                "definition": "to formally send a document, plan, etc. to a person or group in authority so that they can make a decision about it:",
-                "vnDefinition": "chính thức gửi một tài liệu, kế hoạch, v.v. cho một người hoặc một nhóm có thẩm quyền để họ có thể đưa ra quyết định về việc đó:",
-                "word": {
-                    "word": "submit"
-                }
-            }
-        },
-        {
-            "id": 9,
-            "listId": 5,
-            "wordMeaningId": 26259,
-            "addedAt": "2026-10-11T12:03:29.824Z",
-            "wordMeaning": {
-                "id": 26259,
-                "definition": "a date or time by which you have to do or complete something",
-                "vnDefinition": "ngày hoặc giờ mà bạn phải làm hoặc hoàn thành việc gì đó",
-                "word": {
-                    "word": "deadline"
-                }
-            }
-        },
-        {
-            "id": 7,
-            "listId": 5,
-            "wordMeaningId": 3618,
-            "addedAt": "2026-10-11T12:03:19.832Z",
-            "wordMeaning": {
-                "id": 3618,
-                "definition": "an event, sometimes lasting a few days, at which there is a group of talks on a particular subject, or a meeting in which especially business matters are discussed formally:",
-                "vnDefinition": "một sự kiện, đôi khi kéo dài vài ngày, trong đó có một nhóm thảo luận về một chủ đề cụ thể, hoặc một cuộc họp trong đó các vấn đề kinh doanh đặc biệt được thảo luận một cách chính thức:",
-                "word": {
-                    "word": "conference"
-                }
-            }
-        },
-        {
-            "id": 5,
-            "listId": 5,
-            "wordMeaningId": 419,
-            "addedAt": "2026-10-11T12:03:14.492Z",
-            "wordMeaning": {
-                "id": 419,
-                "definition": "a list of matters to be discussed at a meeting:",
-                "vnDefinition": "Danh sách các vấn đề sẽ được thảo luận tại cuộc họp:",
-                "word": {
-                    "word": "agenda"
-                }
-            }
-        },
-        {
-            "id": 4,
-            "listId": 5,
-            "wordMeaningId": 45108,
-            "addedAt": "2026-10-11T12:03:10.917Z",
-            "wordMeaning": {
-                "id": 45108,
-                "definition": "to arrange for something to happen at a different time from the one that was previously planned",
-                "vnDefinition": "sắp xếp cho một việc gì đó xảy ra vào một thời điểm khác với thời điểm đã được lên kế hoạch trước đó",
-                "word": {
-                    "word": "reschedule"
-                }
-            }
-        },
-        {
-            "id": 2,
-            "listId": 5,
-            "wordMeaningId": 14816,
-            "addedAt": "2026-10-11T12:02:51.835Z",
-            "wordMeaning": {
-                "id": 14816,
-                "definition": "to arrange that an event or activity will happen at a particular time:",
-                "vnDefinition": "sắp xếp một sự kiện hoặc hoạt động sẽ xảy ra tại một thời điểm cụ thể:",
-                "word": {
-                    "word": "schedule"
-                }
-            }
-        },
-        {
-            "id": 1,
-            "listId": 5,
-            "wordMeaningId": 1067,
-            "addedAt": "2026-10-11T12:02:44.139Z",
-            "wordMeaning": {
-                "id": 1067,
-                "definition": "to go to an event, place, etc.:",
-                "vnDefinition": "đi đến một sự kiện, địa điểm, v.v.:",
-                "word": {
-                    "word": "attend"
-                }
-            }
-        }
-    ]
-}
-
-/api/my/word-list-iterms/list/5
-{
-    "success": true,
-    "statusCode": 200,
-    "message": "Lấy danh sách word list item theo word list thành công",
-    "data": [
-        {
-            "id": 41,
-            "listId": 5,
-            "wordMeaningId": 5505,
-            "addedAt": "2026-10-11T12:05:38.996Z",
-            "wordMeaning": {
-                "id": 5505,
-                "definition": "a device like a box that moves up and down, carrying people or goods from one floor of a building to another or taking people up and down underground in a mine",
-                "vnDefinition": "một thiết bị giống như một chiếc hộp di chuyển lên xuống, chở người hoặc hàng hóa từ tầng này sang tầng khác của tòa nhà hoặc đưa người lên xuống dưới lòng đất trong hầm mỏ",
-                "word": {
-                    "word": "elevator"
-                }
-            }
-        },
-        {
-            "id": 25,
-            "listId": 5,
-            "wordMeaningId": 14110,
-            "addedAt": "2026-10-11T12:04:48.945Z",
-            "wordMeaning": {
-                "id": 14110,
-                "definition": "something that you must do, or something you need:",
-                "vnDefinition": "điều gì đó bạn phải làm hoặc điều gì đó bạn cần:",
-                "word": {
-                    "word": "requirement"
-                }
-            }
-        },
-        {
-            "id": 23,
-            "listId": 5,
-            "wordMeaningId": 13359,
-            "addedAt": "2026-10-11T12:04:09.107Z",
-            "wordMeaning": {
-                "id": 13359,
-                "definition": "an official record showing that you have finished a training course or have the necessary skills, etc.:",
-                "vnDefinition": "hồ sơ chính thức cho thấy bạn đã hoàn thành khóa đào tạo hoặc có các kỹ năng cần thiết, v.v.:",
-                "word": {
-                    "word": "qualification"
-                }
-            }
-        },
-        {
-            "id": 22,
-            "listId": 5,
-            "wordMeaningId": 20118,
-            "addedAt": "2026-10-11T12:04:05.713Z",
-            "wordMeaning": {
-                "id": 20118,
-                "definition": "someone who has applied for a job, a place on a course, etc.:",
-                "vnDefinition": "ai đó đã nộp đơn xin việc, một vị trí trong một khóa học, v.v.:",
-                "word": {
-                    "word": "applicant"
-                }
-            }
-        },
-        {
-            "id": 21,
-            "listId": 5,
-            "wordMeaningId": 45110,
-            "addedAt": "2026-10-11T12:04:04.031Z",
-            "wordMeaning": {
-                "id": 45110,
-                "definition": "a machine that makes photographic copies of documents",
-                "vnDefinition": "một máy tạo ra các bản sao ảnh của tài liệu",
-                "word": {
-                    "word": "photocopier"
-                }
-            }
-        },
-        {
-            "id": 20,
-            "listId": 5,
-            "wordMeaningId": 23113,
-            "addedAt": "2026-10-11T12:04:02.234Z",
-            "wordMeaning": {
-                "id": 23113,
-                "definition": "to give someone a particular job or make them responsible for a particular person or thing",
-                "vnDefinition": "giao cho ai đó một công việc cụ thể hoặc khiến họ chịu trách nhiệm về một người hoặc vật cụ thể",
-                "word": {
-                    "word": "assign"
-                }
-            }
-        },
-        {
-            "id": 19,
-            "listId": 5,
-            "wordMeaningId": 23198,
-            "addedAt": "2026-10-11T12:03:59.932Z",
-            "wordMeaning": {
-                "id": 23198,
-                "definition": "the main building or offices used by a large company or organization",
-                "vnDefinition": "",
-                "word": {
-                    "word": "headquarters"
-                }
-            }
-        },
-        {
-            "id": 15,
-            "listId": 5,
-            "wordMeaningId": 4649,
-            "addedAt": "2026-10-11T12:03:43.120Z",
-            "wordMeaning": {
-                "id": 4649,
-                "definition": "a part of an organization such as a school, business, or government that deals with a particular area of study or work:",
-                "vnDefinition": "một bộ phận của một tổ chức như trường học, doanh nghiệp hoặc chính phủ liên quan đến một lĩnh vực học tập hoặc công việc cụ thể:",
-                "word": {
-                    "word": "department"
-                }
-            }
-        },
-        {
-            "id": 14,
-            "listId": 5,
-            "wordMeaningId": 19874,
-            "addedAt": "2026-10-11T12:03:41.672Z",
-            "wordMeaning": {
-                "id": 19874,
-                "definition": "a person whose job is to supervise someone or something",
-                "vnDefinition": "một người có công việc là giám sát ai đó hoặc một cái gì đó",
-                "word": {
-                    "word": "supervisor"
-                }
-            }
-        },
-        {
-            "id": 13,
-            "listId": 5,
-            "wordMeaningId": 656,
-            "addedAt": "2026-10-11T12:03:39.991Z",
-            "wordMeaning": {
-                "id": 656,
-                "definition": "something that someone says officially, giving information about something:",
-                "vnDefinition": "điều gì đó mà ai đó nói một cách chính thức, cung cấp thông tin về điều gì đó:",
-                "word": {
-                    "word": "announcement"
-                }
-            }
-        },
-        {
-            "id": 11,
-            "listId": 5,
-            "wordMeaningId": 32601,
-            "addedAt": "2026-10-11T12:03:36.190Z",
-            "wordMeaning": {
-                "id": 32601,
-                "definition": "a short official note to another person in the same company or organization",
-                "vnDefinition": "một thông báo chính thức ngắn cho người khác trong cùng công ty hoặc tổ chức",
-                "word": {
-                    "word": "memo"
-                }
-            }
-        },
-        {
-            "id": 10,
-            "listId": 5,
-            "wordMeaningId": 16957,
-            "addedAt": "2026-10-11T12:03:33.322Z",
-            "wordMeaning": {
-                "id": 16957,
-                "definition": "to formally send a document, plan, etc. to a person or group in authority so that they can make a decision about it:",
-                "vnDefinition": "chính thức gửi một tài liệu, kế hoạch, v.v. cho một người hoặc một nhóm có thẩm quyền để họ có thể đưa ra quyết định về việc đó:",
-                "word": {
-                    "word": "submit"
-                }
-            }
-        },
-        {
-            "id": 9,
-            "listId": 5,
-            "wordMeaningId": 26259,
-            "addedAt": "2026-10-11T12:03:29.824Z",
-            "wordMeaning": {
-                "id": 26259,
-                "definition": "a date or time by which you have to do or complete something",
-                "vnDefinition": "ngày hoặc giờ mà bạn phải làm hoặc hoàn thành việc gì đó",
-                "word": {
-                    "word": "deadline"
-                }
-            }
-        },
-        {
-            "id": 7,
-            "listId": 5,
-            "wordMeaningId": 3618,
-            "addedAt": "2026-10-11T12:03:19.832Z",
-            "wordMeaning": {
-                "id": 3618,
-                "definition": "an event, sometimes lasting a few days, at which there is a group of talks on a particular subject, or a meeting in which especially business matters are discussed formally:",
-                "vnDefinition": "một sự kiện, đôi khi kéo dài vài ngày, trong đó có một nhóm thảo luận về một chủ đề cụ thể, hoặc một cuộc họp trong đó các vấn đề kinh doanh đặc biệt được thảo luận một cách chính thức:",
-                "word": {
-                    "word": "conference"
-                }
-            }
-        },
-        {
-            "id": 5,
-            "listId": 5,
-            "wordMeaningId": 419,
-            "addedAt": "2026-10-11T12:03:14.492Z",
-            "wordMeaning": {
-                "id": 419,
-                "definition": "a list of matters to be discussed at a meeting:",
-                "vnDefinition": "Danh sách các vấn đề sẽ được thảo luận tại cuộc họp:",
-                "word": {
-                    "word": "agenda"
-                }
-            }
-        },
-        {
-            "id": 4,
-            "listId": 5,
-            "wordMeaningId": 45108,
-            "addedAt": "2026-10-11T12:03:10.917Z",
-            "wordMeaning": {
-                "id": 45108,
-                "definition": "to arrange for something to happen at a different time from the one that was previously planned",
-                "vnDefinition": "sắp xếp cho một việc gì đó xảy ra vào một thời điểm khác với thời điểm đã được lên kế hoạch trước đó",
-                "word": {
-                    "word": "reschedule"
-                }
-            }
-        },
-        {
-            "id": 2,
-            "listId": 5,
-            "wordMeaningId": 14816,
-            "addedAt": "2026-10-11T12:02:51.835Z",
-            "wordMeaning": {
-                "id": 14816,
-                "definition": "to arrange that an event or activity will happen at a particular time:",
-                "vnDefinition": "sắp xếp một sự kiện hoặc hoạt động sẽ xảy ra tại một thời điểm cụ thể:",
-                "word": {
-                    "word": "schedule"
-                }
-            }
-        },
-        {
-            "id": 1,
-            "listId": 5,
-            "wordMeaningId": 1067,
-            "addedAt": "2026-10-11T12:02:44.139Z",
-            "wordMeaning": {
-                "id": 1067,
-                "definition": "to go to an event, place, etc.:",
-                "vnDefinition": "đi đến một sự kiện, địa điểm, v.v.:",
-                "word": {
-                    "word": "attend"
-                }
-            }
-        }
-    ]
+    ],
+    "pagination": {
+        "total": 20,
+        "page": 1,
+        "pageSize": 20,
+        "totalPages": 1,
+        "hasNext": false,
+        "hasPrev": false
+    }
 }
