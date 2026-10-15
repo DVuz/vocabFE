@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { ArrowUpRight, BookOpen, ChevronDown, Languages, MousePointer2, Volume2 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { ROUTES } from '../../../shared/constants/routes'
 
@@ -43,18 +44,31 @@ export function HomePage({
         </div>
 
         <h1
-          className="font-display animate-[fadeDown_.6s_.1s_ease_both] relative z-10 mb-5 max-w-3xl
+          className="font-display animate-[fadeDown_.6s_.1s_ease_both] relative z-10 mb-5 max-w-4xl
                        text-5xl leading-[1.1] font-extrabold tracking-tight text-zinc-900 sm:text-6xl lg:text-7xl"
         >
           Tra từ <em className="not-italic text-emerald-600">thông minh</em>,<br />
-          học từ hiệu quả
+          học từ hiệu quả cùng{' '}
+          <span className="inline-flex items-center gap-3 whitespace-nowrap">
+            <em className="not-italic text-emerald-600">VocabPro</em>
+            <a
+              href="#extension"
+              aria-label="Xem hướng dẫn cài đặt VocabPro"
+              className="group relative mt-2 inline-flex size-9 items-center justify-center rounded-full border border-emerald-300 bg-white/80 align-middle text-emerald-600 shadow-[0_4px_14px_rgba(16,185,129,.12)] transition-all hover:-translate-y-1 hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-[0_8px_20px_rgba(16,185,129,.2)] sm:mt-3 sm:size-11"
+            >
+              <ChevronDown
+                className="size-5 transition-transform group-hover:translate-y-0.5 sm:size-6"
+                aria-hidden="true"
+              />
+            </a>
+          </span>
         </h1>
 
         <p
           className="animate-[fadeDown_.6s_.2s_ease_both] relative z-10 mb-10 max-w-md
                       text-base leading-relaxed text-zinc-400 sm:text-lg"
         >
-          Tra từ ngay lập tức, lưu từ yêu thích và xây dựng bộ từ vựng của riêng bạn.
+          Lưu từ yêu thích và học từ mới ngay trên trình duyệt với extension VocabPro.
         </p>
 
         <form
@@ -118,6 +132,7 @@ export function HomePage({
             </div>
           ))}
         </div>
+
       </section>
 
       <section className="relative overflow-hidden bg-zinc-900 px-6 py-20">
@@ -226,6 +241,87 @@ export function HomePage({
                 + Danh sách
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="extension"
+        className="relative scroll-mt-20 overflow-hidden bg-emerald-50 px-6 py-20"
+      >
+        <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -left-20 h-64 w-64 rounded-full bg-amber-200/40 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <div className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white/70 px-3.5 py-1 text-xs font-bold tracking-[.08em] text-emerald-700 uppercase">
+                <span>✦</span> VocabPro Extension
+              </div>
+              <h2 className="font-display mb-4 text-4xl leading-tight font-extrabold tracking-tight text-zinc-900 sm:text-5xl">
+                Học từ ngay khi bạn
+                <br />
+                <em className="not-italic text-emerald-600">đang lướt web</em>
+              </h2>
+              <p className="max-w-xl text-sm leading-relaxed text-zinc-600 sm:text-base">
+                VocabPro là extension Chrome đồng hành cùng Dylan Dictionary. Tra nghĩa, dịch,
+                nghe phát âm và lưu từ mà không cần rời khỏi trang bạn đang đọc.
+              </p>
+            </div>
+            <a
+              href="https://github.com/DVuz/extension_Dicionary"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-px hover:bg-emerald-700"
+            >
+              Xem extension trên GitHub
+              <ArrowUpRight className="size-4" aria-hidden="true" />
+            </a>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: MousePointer2,
+                title: 'Double-click để tra',
+                description: 'Xem phiên âm, từ loại, CEFR, định nghĩa và ví dụ ngay trên trang web.',
+              },
+              {
+                icon: Languages,
+                title: 'Dịch nhanh EN ↔ VI',
+                description: 'Bôi đen đoạn văn rồi chọn nút dịch, hoặc nhấn Ctrl+C để dịch tự động.',
+              },
+              {
+                icon: Volume2,
+                title: 'Nghe phát âm',
+                description: 'Đọc một từ hoặc cả đoạn văn bằng Web Speech hay ElevenLabs.',
+              },
+              {
+                icon: BookOpen,
+                title: 'Lưu để ôn tập',
+                description: 'Lưu từ vào tài khoản VocabPro và tiếp tục học bằng các bộ từ cá nhân.',
+              },
+            ].map(feature => {
+              const Icon = feature.icon
+              return (
+                <div
+                  key={feature.title}
+                  className="rounded-2xl border border-emerald-100 bg-white/80 p-5 shadow-sm"
+                >
+                  <div className="mb-4 flex size-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                  <h3 className="mb-2 text-sm font-bold text-zinc-900">{feature.title}</h3>
+                  <p className="text-xs leading-relaxed text-zinc-500">{feature.description}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-emerald-200/80 bg-white/70 px-5 py-4 text-sm text-zinc-600">
+            <span className="font-semibold text-emerald-700">Cách bắt đầu:</span> mở repository,
+            tải mã nguồn, vào <code className="rounded bg-emerald-100 px-1.5 py-0.5 text-xs text-emerald-800">chrome://extensions</code>,
+            bật Developer mode và chọn <strong className="font-semibold text-zinc-800">Load unpacked</strong>.
           </div>
         </div>
       </section>
