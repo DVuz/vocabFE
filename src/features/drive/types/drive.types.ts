@@ -18,6 +18,17 @@ export interface DriveAudioFile {
   streamUrl: string
 }
 
+export interface DriveImageFile {
+  id: string
+  name: string
+  mimeType: string
+  size?: string
+  modifiedTime?: string
+  webViewLink?: string
+  streamUrl: string
+  imageUrl?: string
+}
+
 export interface DriveContent {
   id: string
   name: string
@@ -25,4 +36,5 @@ export interface DriveContent {
   modifiedTime?: string
   content: string
   audioFiles: DriveAudioFile[]
+  imageFiles: DriveImageFile[]
 }

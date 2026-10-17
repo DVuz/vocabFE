@@ -14,7 +14,7 @@ import { Button } from "../../../components/ui/button";
 import { getAccessToken } from "../../../shared/api";
 import { ROUTES } from "../../../shared/constants/routes";
 import { useDriveContent } from "../hooks/use-drive";
-import type { DriveAudioFile } from "../types/drive.types";
+import type { DriveAudioFile, DriveImageFile } from "../types/drive.types";
 import { DriveTreeSidebar } from "./drive-tree-sidebar";
 
 interface Section {
@@ -27,11 +27,38 @@ type TableViewMode = "grid" | "row";
 function MarkdownContent({
   content,
   tableViewMode,
+  imageFiles,
 }: {
   content: string;
   tableViewMode: TableViewMode;
+  imageFiles: DriveImageFile[];
 }) {
   const isGrid = tableViewMode === "grid";
+  const imageFileByName = useMemo(
+    () =>
+      new Map(
+        imageFiles.map((image) => [image.name.trim().toLocaleLowerCase(), image]),
+      ),
+    [imageFiles],
+  );
+  const markdown = useMemo(
+    () =>
+      content.replace(
+        /!\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]/g,
+        (embed, name, width?: string) => {
+          const image = imageFileByName.get(name.trim().toLocaleLowerCase());
+          if (!image) return embed;
+
+          const imageWidth = width?.trim();
+          const widthQuery =
+            imageWidth && /^\d+$/.test(imageWidth)
+              ? `?width=${imageWidth}`
+              : "";
+          return `![${name.trim()}](https://drive-image.local/${encodeURIComponent(image.id)}${widthQuery})`;
+        },
+      ),
+    [content, imageFileByName],
+  );
 
   return (
     <div className="markdown-content overflow-x-auto">
@@ -112,11 +139,109 @@ function MarkdownContent({
               {children}
             </pre>
           ),
+          img: ({ src, alt, title }) => {
+            const imageId = src?.match(/^https:\/\/drive-image\.local\/([^?]+)/)?.[1];
+            const image = imageId
+              ? imageFiles.find((file) => file.id === decodeURIComponent(imageId))
+              : undefined;
+            const width = src?.match(/[?&]width=(\d+)/)?.[1];
+
+            return image ? (
+              <DriveImage
+                alt={alt ?? image.name}
+                image={image}
+                title={title}
+                width={width ? Number(width) : undefined}
+              />
+            ) : (
+              <img src={src} alt={alt} title={title} className="max-w-full" />
+            );
+          },
         }}
       >
-        {content}
+        {markdown}
       </ReactMarkdown>
     </div>
+  );
+}
+
+function DriveImage({
+  image,
+  alt,
+  title,
+  width,
+}: {
+  image: DriveImageFile;
+  alt?: string;
+  title?: string;
+  width?: number;
+}) {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let objectUrl: string | null = null;
+
+    async function loadImage() {
+      try {
+        const baseUrl =
+          import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3000";
+        const streamUrl = image.streamUrl || image.imageUrl;
+        if (!streamUrl) throw new Error("Drive image has no stream URL.");
+        const url = streamUrl.startsWith("http")
+          ? streamUrl
+          : `${baseUrl}${streamUrl}`;
+        const token = getAccessToken();
+        const response = await fetch(url, {
+          headers: token ? { Authorization: "Bearer " + token } : undefined,
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Image request failed: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        objectUrl = URL.createObjectURL(blob);
+        setImageUrl(objectUrl);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error("Unable to load Drive image", error);
+          setHasError(true);
+        }
+      }
+    }
+
+    void loadImage();
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [image.id, image.imageUrl, image.streamUrl]);
+
+  if (hasError) {
+    return (
+      <span className="my-3 block text-xs text-red-500">
+        Không thể tải ảnh: {image.name}
+      </span>
+    );
+  }
+
+  if (!imageUrl) {
+    return (
+      <span className="my-3 block text-xs text-slate-400">Đang tải ảnh...</span>
+    );
+  }
+
+  return (
+    <img
+      src={imageUrl}
+      alt={alt ?? image.name}
+      title={title}
+      width={width}
+      className="my-3 h-auto max-w-full rounded-lg"
+    />
   );
 }
 
@@ -350,6 +475,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                         <MarkdownContent
                           content={section.answer || "No answer available."}
                           tableViewMode={tableViewMode}
+                          imageFiles={data.imageFiles}
                         />
                       </div>
                     )}
@@ -362,6 +488,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
               <MarkdownContent
                 content={data.content}
                 tableViewMode={tableViewMode}
+                imageFiles={data.imageFiles}
               />
             </div>
           )}
