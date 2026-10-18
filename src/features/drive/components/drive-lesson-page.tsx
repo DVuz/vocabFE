@@ -61,16 +61,55 @@ function MarkdownContent({
   );
 
   return (
-    <div className="markdown-content overflow-x-auto">
+    <div className="markdown-content overflow-x-auto text-[15px] leading-7 text-slate-700">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
+          h1: ({ children }) => (
+            <h1 className="mb-5 border-b border-slate-200 pb-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+              {children}
+            </h1>
+          ),
+          h2: ({ children }) => (
+            <h2 className="mb-4 mt-8 flex items-center gap-2 border-b border-slate-200 pb-2 text-xl font-extrabold text-slate-900 first:mt-0 sm:text-2xl">
+              <span className="h-5 w-1.5 rounded-full bg-emerald-500" />
+              {children}
+            </h2>
+          ),
+          h3: ({ children }) => (
+            <h3 className="mb-3 mt-6 text-lg font-bold text-slate-800">
+              {children}
+            </h3>
+          ),
+          h4: ({ children }) => (
+            <h4 className="mb-2 mt-5 text-base font-bold text-emerald-800">
+              {children}
+            </h4>
+          ),
+          p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
           ul: ({ children }) => (
             <ul className="mb-4 list-disc space-y-1 pl-6">{children}</ul>
           ),
           ol: ({ children }) => (
             <ol className="mb-4 list-decimal space-y-1 pl-6">{children}</ol>
+          ),
+          li: ({ children }) => <li className="pl-1">{children}</li>,
+          hr: () => <hr className="my-6 border-slate-200" />,
+          strong: ({ children }) => (
+            <strong className="font-bold text-slate-900">{children}</strong>
+          ),
+          em: ({ children }) => (
+            <em className="text-slate-600">{children}</em>
+          ),
+          a: ({ children, href }) => (
+            <a
+              href={href}
+              className="font-medium text-emerald-700 underline decoration-emerald-300 underline-offset-2 hover:text-emerald-900"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {children}
+            </a>
           ),
           blockquote: ({ children }) => (
             <blockquote className="my-4 border-l-4 border-emerald-300 bg-emerald-50/60 px-4 py-3 italic text-slate-600">
@@ -245,10 +284,16 @@ function DriveImage({
   );
 }
 
-function parseSections(markdown: string): Section[] {
+interface ParsedLesson {
+  intro: string;
+  sections: Section[];
+}
+
+function parseSections(markdown: string): ParsedLesson {
   const lines = markdown.split(/\r?\n/);
   const sections: Section[] = [];
   let current: Section | null = null;
+  const intro: string[] = [];
 
   for (const line of lines) {
     const heading = line.match(/^###\s+(.+)$/);
@@ -257,11 +302,13 @@ function parseSections(markdown: string): Section[] {
       current = { question: heading[1].trim(), answer: "" };
     } else if (current && !line.match(/^!\[\[.*\]\]$/)) {
       current.answer += `${line}\n`;
+    } else if (!current) {
+      intro.push(line);
     }
   }
 
   if (current) sections.push({ ...current, answer: current.answer.trim() });
-  return sections;
+  return { intro: intro.join("\n").trim(), sections };
 }
 
 function AudioPlayer({ audio }: { audio: DriveAudioFile }) {
@@ -349,10 +396,11 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
   const { data, isLoading, isError, error } = useDriveContent(fileId);
   const [openIndex, setOpenIndex] = useState(0);
   const [tableViewMode, setTableViewMode] = useState<TableViewMode>("grid");
-  const sections = useMemo(
+  const parsedLesson = useMemo(
     () => parseSections(data?.content ?? ""),
     [data?.content],
   );
+  const { intro, sections } = parsedLesson;
 
   if (isLoading)
     return (
@@ -442,7 +490,16 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
           </header>
 
           {sections.length > 0 ? (
-            <div className="mt-4 space-y-2">
+            <div className="mt-4 space-y-3">
+              {intro && (
+                <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-5 shadow-sm sm:p-6">
+                  <MarkdownContent
+                    content={intro}
+                    tableViewMode={tableViewMode}
+                    imageFiles={data.imageFiles}
+                  />
+                </div>
+              )}
               {sections.map((section, index) => {
                 const open = openIndex === index;
                 return (
@@ -471,7 +528,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                       )}
                     </Button>
                     {open && (
-                      <div className="border-t border-slate-100 bg-slate-50/60 px-3.5 py-3 pl-[3.25rem] text-sm leading-6 text-slate-600">
+                      <div className="border-t border-slate-100 bg-slate-50/60 px-3.5 py-4 pl-[3.25rem] text-sm leading-6 text-slate-600 sm:px-5 sm:pl-[4.25rem]">
                         <MarkdownContent
                           content={section.answer || "No answer available."}
                           tableViewMode={tableViewMode}

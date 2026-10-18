@@ -1,574 +1,319 @@
-{
-    "success": true,
-    "statusCode": 200,
-    "message": "Lấy danh sách từ cần kiểm tra thành công",
-    "data": [
-        {
-            "userWordId": 219,
-            "wordId": 3151,
-            "word": "consistency",
-            "meaningId": 20973,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "the quality of always behaving or performing in a similar way, or of always happening in a similar way:",
-            "vnDefinition": "chất lượng của việc luôn cư xử hoặc thực hiện theo cách tương tự hoặc luôn xảy ra theo cách tương tự:",
-            "examples": [
-                "They've won a few games this season but they lack consistency.",
-                "It's important to show some consistency in your work."
-            ],
-            "ipa": {
-                "uk": "kənˈsɪs.tən.si",
-                "us": "kənˈsɪs.tən.si"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/c/consistency.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/c/consistency.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:36.000Z",
-            "addedAt": "2026-07-01T16:22:33.521Z"
-        },
-        {
-            "userWordId": 220,
-            "wordId": 185,
-            "word": "attend",
-            "meaningId": 1067,
-            "partOfSpeech": "verb",
-            "cefrLevel": "B1",
-            "definition": "to go to an event, place, etc.:",
-            "vnDefinition": "đi đến một sự kiện, địa điểm, v.v.:",
-            "examples": [
-                "Over two hundred people attended the funeral.",
-                "The meeting is on the fifth and we're hoping everyone will attend."
-            ],
-            "ipa": {
-                "uk": "əˈtend",
-                "us": "əˈtend"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/attend.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/attend.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:36.000Z",
-            "addedAt": "2026-10-04T04:45:00.518Z"
-        },
-        {
-            "userWordId": 221,
-            "wordId": 2253,
-            "word": "schedule",
-            "meaningId": 14816,
-            "partOfSpeech": "verb",
-            "cefrLevel": "B2",
-            "definition": "to arrange that an event or activity will happen at a particular time:",
-            "vnDefinition": "sắp xếp một sự kiện hoặc hoạt động sẽ xảy ra tại một thời điểm cụ thể:",
-            "examples": [
-                "The meeting has been scheduled for tomorrow afternoon.",
-                "The flight is scheduled to arrive at 8.45, but it's running 20 minutes late."
-            ],
-            "ipa": {
-                "uk": "ˈʃedʒ.uːl",
-                "us": "ˈskedʒ.uːl"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/schedule.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/schedule.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:37.000Z",
-            "addedAt": "2026-10-04T04:46:35.329Z"
-        },
-        {
-            "userWordId": 222,
-            "wordId": 16039,
-            "word": "reschedule",
-            "meaningId": 45108,
-            "partOfSpeech": "verb",
-            "cefrLevel": null,
-            "definition": "to arrange for something to happen at a different time from the one that was previously planned",
-            "vnDefinition": "sắp xếp cho một việc gì đó xảy ra vào một thời điểm khác với thời điểm đã được lên kế hoạch trước đó",
-            "examples": [
-                "The press conference had to be rescheduled for March 19."
-            ],
-            "ipa": {
-                "uk": "ˌriːˈʃedjuːl",
-                "us": "ˌriːˈʃedjuːl"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://www.ldoceonline.com/media/english/breProns/ld41reschedule.mp3?version=1.2.93",
-                "us": "https://www.ldoceonline.com/media/english/ameProns/reschedule.mp3?version=1.2.93"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:37.000Z",
-            "addedAt": "2026-10-04T04:47:19.546Z"
-        },
-        {
-            "userWordId": 223,
-            "wordId": 64,
-            "word": "agenda",
-            "meaningId": 419,
-            "partOfSpeech": "noun",
-            "cefrLevel": "C1",
-            "definition": "a list of matters to be discussed at a meeting:",
-            "vnDefinition": "Danh sách các vấn đề sẽ được thảo luận tại cuộc họp:",
-            "examples": [
-                "There were several important items on the agenda.",
-                "The question of security is high on the agenda for this afternoon's meeting."
-            ],
-            "ipa": {
-                "uk": "əˈdʒen.də",
-                "us": "əˈdʒen.də"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/agenda.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/agenda.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:37.000Z",
-            "addedAt": "2026-10-04T04:48:36.861Z"
-        },
-        {
-            "userWordId": 224,
-            "wordId": 537,
-            "word": "conference",
-            "meaningId": 3618,
-            "partOfSpeech": "noun",
-            "cefrLevel": "B1",
-            "definition": "an event, sometimes lasting a few days, at which there is a group of talks on a particular subject, or a meeting in which especially business matters are discussed formally:",
-            "vnDefinition": "một sự kiện, đôi khi kéo dài vài ngày, trong đó có một nhóm thảo luận về một chủ đề cụ thể, hoặc một cuộc họp trong đó các vấn đề kinh doanh đặc biệt được thảo luận một cách chính thức:",
-            "examples": [
-                "a conference on women's rights",
-                "They frequently hold conferences at that hotel.",
-                "I'm speaking at/attending a conference next week."
-            ],
-            "ipa": {
-                "uk": "ˈkɒn.fər.əns",
-                "us": "ˈkɑːn.fɚ.əns"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/c/conference.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/c/conference.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:38.000Z",
-            "addedAt": "2026-10-04T04:56:33.616Z"
-        },
-        {
-            "userWordId": 225,
-            "wordId": 5229,
-            "word": "deadline",
-            "meaningId": 26259,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "a date or time by which you have to do or complete something",
-            "vnDefinition": "ngày hoặc giờ mà bạn phải làm hoặc hoàn thành việc gì đó",
-            "examples": [
-                "He missed the deadline for applications.",
-                "It has to be in before the deadline of July 1st.",
-                "I'm always working under pressure to meet deadlines (=finish something on time)."
-            ],
-            "ipa": {
-                "uk": "ˈdedlaɪn",
-                "us": "ˈdedlaɪn"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/d/deadline.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/d/deadline.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:39.000Z",
-            "addedAt": "2026-10-04T05:12:19.812Z"
-        },
-        {
-            "userWordId": 226,
-            "wordId": 2523,
-            "word": "submit",
-            "meaningId": 16957,
-            "partOfSpeech": "verb",
-            "cefrLevel": null,
-            "definition": "to formally send a document, plan, etc. to a person or group in authority so that they can make a decision about it:",
-            "vnDefinition": "chính thức gửi một tài liệu, kế hoạch, v.v. cho một người hoặc một nhóm có thẩm quyền để họ có thể đưa ra quyết định về việc đó:",
-            "examples": [
-                "The consortium has yet to submit a bid.",
-                "They submitted the report after the retailer said that it might choose a replacement ad agency last year.",
-                "Applications must be submitted by December 5."
-            ],
-            "ipa": {
-                "uk": "səbˈmɪt",
-                "us": "səbˈmɪt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/submit.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/submit.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:39.000Z",
-            "addedAt": "2026-10-04T05:12:41.949Z"
-        },
-        {
-            "userWordId": 227,
-            "wordId": 8275,
-            "word": "memo",
-            "meaningId": 32601,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "a short official note to another person in the same company or organization",
-            "vnDefinition": "một thông báo chính thức ngắn cho người khác trong cùng công ty hoặc tổ chức",
-            "examples": [
-                "I sent him a memo reminding him about the meeting.",
-                "a memo from the managing director to all heads of department"
-            ],
-            "ipa": {
-                "uk": "ˈmeməʊ",
-                "us": "ˈmeməʊ"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/m/memo.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/m/memo.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:39.000Z",
-            "addedAt": "2026-10-04T05:12:56.746Z"
-        },
-        {
-            "userWordId": 228,
-            "wordId": 110,
-            "word": "announcement",
-            "meaningId": 656,
-            "partOfSpeech": "noun",
-            "cefrLevel": "B1",
-            "definition": "something that someone says officially, giving information about something:",
-            "vnDefinition": "điều gì đó mà ai đó nói một cách chính thức, cung cấp thông tin về điều gì đó:",
-            "examples": [
-                "The president made an unexpected announcement this morning."
-            ],
-            "ipa": {
-                "uk": "əˈnaʊns.mənt",
-                "us": "əˈnaʊns.mənt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/announcement.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/announcement.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:40.000Z",
-            "addedAt": "2026-10-04T05:13:04.444Z"
-        },
-        {
-            "userWordId": 229,
-            "wordId": 3047,
-            "word": "supervisor",
-            "meaningId": 19874,
-            "partOfSpeech": "noun",
-            "cefrLevel": "C1",
-            "definition": "a person whose job is to supervise someone or something",
-            "vnDefinition": "một người có công việc là giám sát ai đó hoặc một cái gì đó",
-            "examples": [],
-            "ipa": {
-                "uk": "ˈsuː.pə.vaɪ.zər",
-                "us": "ˈsuː.pɚ.vaɪ.zɚ"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/supervisor.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/supervisor.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:40.000Z",
-            "addedAt": "2026-10-04T05:13:08.531Z"
-        },
-        {
-            "userWordId": 230,
-            "wordId": 700,
-            "word": "department",
-            "meaningId": 4649,
-            "partOfSpeech": "noun",
-            "cefrLevel": "A2",
-            "definition": "a part of an organization such as a school, business, or government that deals with a particular area of study or work:",
-            "vnDefinition": "một bộ phận của một tổ chức như trường học, doanh nghiệp hoặc chính phủ liên quan đến một lĩnh vực học tập hoặc công việc cụ thể:",
-            "examples": [
-                "the Department of Health and Social Security",
-                "She is a professor in the chemistry department/the department of chemistry.",
-                "The sales department is/are having a Christmas party this week."
-            ],
-            "ipa": {
-                "uk": "dɪˈpɑːt.mənt",
-                "us": "dɪˈpɑːrt.mənt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/d/department.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/d/department.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:40.000Z",
-            "addedAt": "2026-10-04T05:13:17.992Z"
-        },
-        {
-            "userWordId": 231,
-            "wordId": 3967,
-            "word": "headquarters",
-            "meaningId": 23198,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "the main building or offices used by a large company or organization",
-            "vnDefinition": "",
-            "examples": [
-                "the headquarters of the United Nations"
-            ],
-            "ipa": {
-                "uk": "ˈhedˌkwɔːtəz, ˌhedˈkwɔːtəz",
-                "us": "ˈhedˌkwɔːtəz, ˌhedˈkwɔːtəz"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/h/headquarters.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/h/headquarters.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:41.000Z",
-            "addedAt": "2026-10-04T05:14:00.667Z"
-        },
-        {
-            "userWordId": 232,
-            "wordId": 3937,
-            "word": "assign",
-            "meaningId": 23113,
-            "partOfSpeech": "verb",
-            "cefrLevel": null,
-            "definition": "to give someone a particular job or make them responsible for a particular person or thing",
-            "vnDefinition": "giao cho ai đó một công việc cụ thể hoặc khiến họ chịu trách nhiệm về một người hoặc vật cụ thể",
-            "examples": [
-                "Jan’s been assigned to the Asian Affairs Bureau.",
-                "Madison was assigned to investigate a balloon accident.",
-                "Assign each student a partner."
-            ],
-            "ipa": {
-                "uk": "əˈsaɪn",
-                "us": "əˈsaɪn"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/assign.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/assign.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:41.000Z",
-            "addedAt": "2026-10-04T05:14:22.249Z"
-        },
-        {
-            "userWordId": 233,
-            "wordId": 16040,
-            "word": "photocopier",
-            "meaningId": 45110,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "a machine that makes photographic copies of documents",
-            "vnDefinition": "một máy tạo ra các bản sao ảnh của tài liệu",
-            "examples": [],
-            "ipa": {
-                "uk": "ˈfəʊtəʊˌkɒpiə",
-                "us": "ˈfəʊtəʊˌkɒpiə"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://www.ldoceonline.com/media/english/breProns/photocopier0205.mp3?version=1.2.93",
-                "us": "https://www.ldoceonline.com/media/english/ameProns/photocopier.mp3?version=1.2.93"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:41.000Z",
-            "addedAt": "2026-10-04T05:14:27.141Z"
-        },
-        {
-            "userWordId": 234,
-            "wordId": 3107,
-            "word": "applicant",
-            "meaningId": 20118,
-            "partOfSpeech": "noun",
-            "cefrLevel": null,
-            "definition": "someone who has applied for a job, a place on a course, etc.:",
-            "vnDefinition": "ai đó đã nộp đơn xin việc, một vị trí trong một khóa học, v.v.:",
-            "examples": [
-                "Many applicants simply don't meet hiring requirements.",
-                "The course is popular - it has five applicants for every place.",
-                "Successful applicants will be notified in writing."
-            ],
-            "ipa": {
-                "uk": "ˈæp.lɪ.kənt",
-                "us": "ˈæp.lə.kənt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/a/applicant.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/a/applicant.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:42.000Z",
-            "addedAt": "2026-10-04T05:15:01.674Z"
-        },
-        {
-            "userWordId": 235,
-            "wordId": 2054,
-            "word": "qualification",
-            "meaningId": 13359,
-            "partOfSpeech": "noun",
-            "cefrLevel": "B1",
-            "definition": "an official record showing that you have finished a training course or have the necessary skills, etc.:",
-            "vnDefinition": "hồ sơ chính thức cho thấy bạn đã hoàn thành khóa đào tạo hoặc có các kỹ năng cần thiết, v.v.:",
-            "examples": [
-                "You'll never get a good job if you don't have any qualifications.",
-                "Do you have any teaching/legal/medical/secretarial/academic qualifications?"
-            ],
-            "ipa": {
-                "uk": "ˌkwɒl.ɪ.fɪˈkeɪ.ʃən",
-                "us": "ˌkwɑː.lə.fəˈkeɪ.ʃən"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/q/qualification.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/q/qualification.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:42.000Z",
-            "addedAt": "2026-10-04T05:15:35.168Z"
-        },
-        {
-            "userWordId": 236,
-            "wordId": 2164,
-            "word": "requirement",
-            "meaningId": 14110,
-            "partOfSpeech": "noun",
-            "cefrLevel": "B2",
-            "definition": "something that you must do, or something you need:",
-            "vnDefinition": "điều gì đó bạn phải làm hoặc điều gì đó bạn cần:",
-            "examples": [
-                "A good degree is a minimum requirement for many jobs.",
-                "It is a legal requirement that you have insurance for your car.",
-                "Students who fail to meet the requirements (of the course) will fail."
-            ],
-            "ipa": {
-                "uk": "rɪˈkwaɪə.mənt",
-                "us": "rɪˈkwaɪr.mənt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/r/requirement.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/r/requirement.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:43.000Z",
-            "addedAt": "2026-10-04T05:15:38.438Z"
-        },
-        {
-            "userWordId": 237,
-            "wordId": 6615,
-            "word": "recruit",
-            "meaningId": 29411,
-            "partOfSpeech": "verb",
-            "cefrLevel": null,
-            "definition": "to find new people to work in a company, join an organization, do a job etc",
-            "vnDefinition": "",
-            "examples": [
-                "We’re having difficulty recruiting enough qualified staff.",
-                "Many government officials were recruited from private industry."
-            ],
-            "ipa": {
-                "uk": "rɪˈkruːt",
-                "us": "rɪˈkruːt"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/r/recruit.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/r/recruit.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:43.000Z",
-            "addedAt": "2026-10-04T05:15:52.504Z"
-        },
-        {
-            "userWordId": 238,
-            "wordId": 2233,
-            "word": "salary",
-            "meaningId": 14669,
-            "partOfSpeech": "noun",
-            "cefrLevel": "B1",
-            "definition": "a fixed amount of money agreed every year as pay for an employee, usually paid directly into his or her bank account every month:",
-            "vnDefinition": "một khoản tiền cố định được thỏa thuận hàng năm để trả cho nhân viên, thường được trả trực tiếp vào tài khoản ngân hàng của người đó hàng tháng:",
-            "examples": [
-                "an annual salary of £40,000",
-                "His net monthly salary is €2,500.",
-                "She's on quite a good/decent salary in her present job."
-            ],
-            "ipa": {
-                "uk": "ˈsæl.ər.i",
-                "us": "ˈsæl.ɚ.i"
-            },
-            "audio": {
-                "tts": null,
-                "uk": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/uk/s/salary.mp3",
-                "us": "https://hxhdiehbpyoesmblrrva.supabase.co/storage/v1/object/public/vocab/us/s/salary.mp3"
-            },
-            "status": "new",
-            "currentStreak": 0,
-            "intervalDays": 1,
-            "nextReviewAt": "2026-10-11T19:07:43.000Z",
-            "addedAt": "2026-10-04T05:16:06.684Z"
-        }
-    ],
-    "pagination": {
-        "total": 20,
-        "page": 1,
-        "pageSize": 20,
-        "totalPages": 1,
-        "hasNext": false,
-        "hasPrev": false
-    }
-}
+
+
+---
+
+# PHẦN 2 – SPEAKING PART 2+3 (KÈM WRITING)
+
+### 1. A popular place for sports (e.g. stadium)
+**Part 2:** Where it is • When you went there • What you did there • How you felt about this place.
+**Part 3:**
+1. Do young people like to do sports?
+2. Why do young people do less sport than their parents?
+
+✍️ **Writing (Problem–Solution):** *Many young people do less exercise than their parents' generation. What are the causes, and what can be done to encourage them to be more active?*
+
+---
+
+### 2. A person you know from a different culture
+**Part 2:** Who he/she is • Where he/she is from • How you knew him/her • How you feel about him/her.
+**Part 3:**
+1. Where and how can we get to know people of different cultures better?
+2. What are the advantages and disadvantages of cultural diversity?
+3. How can traditional culture and other cultures coexist?
+
+✍️ **Writing (Advantages–Disadvantages):** *More people now live in societies with a mix of cultures. Do the advantages of cultural diversity outweigh the disadvantages?*
+
+---
+
+### 3 + 9. A time you received money on your birthday
+**Part 2:** When it happened • Who gave you money • Why he/she gave you money • How you felt about it. *(Đề 9 thêm: What you did with it.)*
+**Part 3:**
+1. Why do people rarely use cash now?
+2. Do you agree that nowadays people value money the most?
+3. What do young people spend money on?
+4. Why do young people tend to waste money?
+5. Do people in your country like to save money?
+6. What is the best way of saving money?
+7. Why is it important for people to save some of their money?
+8. Should children be taught how to manage money?
+9. Do you think girls are better at saving money than boys?
+
+✍️ **Writing:**
+- *Children should be taught how to manage money at school. To what extent do you agree or disagree?*
+- *(Problem–Solution)* *Many young people spend money carelessly. What are the causes and solutions?*
+- *(Discuss both views)* *Some say money is the most important thing in life; others disagree.*
+
+---
+
+### 4. A song / piece of music you like
+**Part 2:** Which country it is from • What story it is about • Whom you knew it from • Why you like it.
+**Part 3:**
+1. Do people nowadays like the same music as people in the past?
+2. Is there any difference in music preferences between age groups?
+
+✍️ **Writing (Opinion):** *Music preferences differ greatly between generations and create a gap between them. Do you agree or disagree?*
+
+---
+
+### 5. An interesting story you've heard
+**Part 2:** What the story was about • Who told you • When you heard it • Why it is interesting.
+**Part 3:**
+1. Why do children like hearing the same bedtime story?
+2. Why do children like stories?
+3. What kind of stories do children like to listen to?
+4. What can a child learn from a story?
+
+✍️ **Writing (Opinion):** *Reading stories to children is the best way to teach them values and develop imagination. To what extent do you agree or disagree?*
+
+---
+
+### 6 + 16. An important thing you learned (not at school) / An impressive English lesson
+*(Học chung vì cùng chủ đề "học".)*
+
+**6 – Part 2:** What it is • When you learned it • How you learned it • Why it was important.
+**Part 3:**
+1. What can children learn from their parents?
+2. Must employees constantly want to learn new things?
+3. Is learning new things important?
+
+**16 – Part 2:** When it was • Where it was • What you did • What your teacher did • Why you liked him/her.
+**Part 3:**
+1. Why do people learn foreign languages?
+2. What makes a good foreign language teacher?
+3. Is grammar important when learning foreign languages?
+
+✍️ **Writing:**
+- *Employees should keep learning new skills throughout their careers. To what extent do you agree?*
+- *(Discuss both views)* *Some think grammar should be the focus when learning a language; others prefer communication.*
+
+---
+
+### 7. A photo you took that you're proud of
+**Part 2:** Where you took it • When you took it • How you took it • Why you're proud of it.
+**Part 3:**
+1. What do you think of those who change their faces and post them on social media?
+2. Do people in your country like to take photos?
+3. Why do people like to record important things with photos?
+4. What are the advantages and disadvantages of travelling with a camera?
+
+✍️ **Writing (Discuss/Advantages–Disadvantages):** *Some people take photos of everything they experience, especially while travelling. Is this a positive or negative development?*
+
+---
+
+### 8. A movie you watched recently and want to watch again
+**Part 2:** What the movie is about • Where you watched it • Why you liked it • Why you want to watch it again.
+**Part 3:**
+1. Do people in your country like to go to a cinema?
+2. How often do you go to a cinema?
+3. Should actors be paid more?
+4. What makes an actor a famous movie star?
+
+✍️ **Writing:**
+- *Film stars are paid too much money. To what extent do you agree or disagree?*
+- *(Discuss both views)* *Watching films at home is better than going to the cinema.*
+
+---
+
+### 10. A TV program you like
+**Part 2:** *(file gốc copy nhầm cue card đề 9; dùng cue card chuẩn)* What the program is about • When you watch it • Who you watch it with • Why you like it.
+**Part 3:**
+1. Will libraries be replaced by the Internet?
+2. What are the ways of getting information nowadays?
+3. How can people check whether information is correct?
+4. Do people trust information online?
+
+✍️ **Writing:**
+- *(Opinion)* *Libraries are no longer necessary because information is available online. To what extent do you agree?*
+- *(Problem–Solution)* *Fake news spreads quickly online. What problems does it cause and what can be done?*
+
+---
+
+### 11. An experience of online shopping
+**Part 2:** What you bought • What problems you had • How it was solved/used • How you felt.
+**Part 3:**
+1. What makes a good service to you?
+2. What services do you expect from a company as a customer?
+3. What is bad service?
+4. Is after-sales service important for a company?
+
+✍️ **Writing (Opinion):** *Online shopping will replace traditional stores in the future. To what extent do you agree or disagree?*
+*(Đề phụ: Good customer service is more important than low prices for a business to succeed. Discuss.)*
+
+---
+
+### 12. A time you shared something with others
+**Part 2:** What you shared and why • When you shared it • Who you shared it with • How you felt.
+**Part 3:**
+1. How can parents and teachers teach children to share?
+2. Do you like sharing things with others?
+3. Why don't some people like sharing?
+4. Do people prefer to share public transport or use private transport?
+5. Is it important to have rules in shared accommodation?
+6. Is it good to share personal information on the Internet?
+7. Are there advantages to sharing your home with other people?
+8. How do you feel about sharing accommodation with others on campus?
+
+✍️ **Writing:**
+- *Children should be taught to share from an early age. How can this be done, and why is it important?*
+- *(Discuss)* *Sharing accommodation has more advantages than disadvantages.*
+
+---
+
+### 13. An object that you think is beautiful
+**Part 2:** What it is and what it looks like • Where you saw it • When you saw it • Why you think it's beautiful.
+**Part 3:**
+1. Are there more beautiful things now than in the past?
+2. What beautiful scenery spots are there in your country?
+3. Where do people usually come into contact with beautiful things?
+4. Why do people create beautiful things?
+
+✍️ **Writing (Discuss both views):** *Some think governments should spend money on beautiful buildings and public art; others think the money should be used for other things.*
+
+---
+
+### 14. A time you forgot an appointment
+**Part 2:** What the appointment was • When and where it was • Why you forgot • How you felt.
+**Part 3:**
+1. What can people do to remember information for everyday needs?
+2. What do you think of people using calendars to remind themselves?
+
+✍️ **Writing (Positive/Negative):** *People today rely on technology such as calendars and apps to remember things. Is this a positive or negative development?*
+
+---
+
+### 15. A friend from your childhood
+**Part 2:** Who this person is • How you met • What you did together • Why you liked him/her.
+**Part 3:**
+1. Why is childhood important for us?
+2. What changes have you gone through since childhood?
+3. What are the differences between childhood friends and college friends?
+
+✍️ **Writing (Discuss both views):** *Some believe childhood experiences shape who we become as adults; others believe adult experiences matter more.*
+
+---
+
+### 17. An occasion when you decided to wait for something
+**Part 2:** What you waited for • Why you decided to wait • When it was • How you felt.
+**Part 3:**
+1. What do people in your country often do while waiting?
+2. Why do some people like a slow-paced life?
+3. Is being patient good for people?
+4. Are people less patient now than in the past?
+
+✍️ **Writing (Problem–Solution):** *People today are less patient than in the past and expect everything instantly. What problems does this cause and what can be done?*
+
+---
+
+### 18. An outdoor activity you did in a new place
+**Part 2:** What you did, when and where • Who you did it with • Whether it was difficult or easy • Why it was new or exciting.
+**Part 3:**
+1. What outdoor activities are popular in your country?
+2. Are people who like dangerous activities more likely to be successful?
+3. Is it better to change jobs when there are new chances?
+4. Which is better, taking photos or keeping a diary?
+
+✍️ **Writing (Discuss both views):** *Some think taking risks and trying dangerous activities leads to success; others disagree.*
+*(Đề phụ: Changing jobs frequently is good for career development. Agree or disagree?)*
+
+---
+
+### 19. A person who inspired you to do something interesting
+**Part 2:** Who this person is • What they inspired you to do • How they helped you • Why this encouragement helped you achieve a goal.
+**Part 3:**
+1. What qualities make someone a role model?
+2. Why should children learn from role models?
+3. Who can influence children more, teachers or parents?
+4. What kind of international news inspires people?
+
+✍️ **Writing (Discuss both views):** *Some think parents have the greatest influence on children; others think teachers do.*
+*(Đề phụ: What qualities make a good role model, and why are they important for children?)*
+
+---
+
+### 20. An interesting place in your country to recommend to tourists
+**Part 2:** What place it is • Where it is • What people can do there • Why it is interesting.
+**Part 3:**
+1. Do people in your country like to travel?
+2. How has travelling changed compared to several decades ago?
+3. When do people often travel and who do they go with?
+4. Can travel change people's way of thinking?
+
+✍️ **Writing (Advantages–Disadvantages):** *International tourism brings benefits as well as problems. Do the advantages outweigh the disadvantages?*
+*(Đề phụ: Travelling to other countries can change the way people think. To what extent do you agree?)*
+
+---
+
+### 21. A disagreement you had with someone
+**Part 2:** What it was about • Who you had it with • What opinions you had • How you feel about it.
+**Part 3:**
+1. What will you do if you disagree with someone?
+2. How can we stop an argument from escalating into a fight?
+3. Who should teach children to respect their teacher?
+4. What disagreements do parents and children usually have?
+
+✍️ **Writing (Problem–Solution):** *Respect for teachers is declining among children. What are the causes and what can be done?*
+*(Đề phụ: Parents and children often disagree. What causes this and how can it be resolved?)*
+
+---
+
+### 22. A person who loves to grow plants
+**Part 2:** Who this person is • What they grow • Where they grow them • Why they love growing plants.
+**Part 3:**
+1. Are there many people growing their own vegetables now?
+2. Is it good to let kids learn how to plant?
+3. What do you think of the job of a farmer?
+4. What are the differences between traditional and modern agriculture?
+
+✍️ **Writing (Opinion):** *Children should learn how to grow their own food at school. To what extent do you agree or disagree?*
+*(Đề phụ: Modern agriculture is better than traditional farming. Discuss.)*
+
+---
+
+### 23. A person who likes to dress fashionably
+**Part 2:** Who this person is • What job they do • What kind of clothes they wear • Why they like fashion.
+**Part 3:**
+1. Are you a person who likes to follow fashion?
+2. Where do people usually buy clothes?
+3. Will online shopping replace in-store shopping in the future?
+4. Are older people as fashionable as young people?
+
+✍️ **Writing (Opinion):** *Fashion is an important part of people's lives and is not a waste of money. To what extent do you agree?*
+*(Học chung với Writing của đề 11 về mua sắm online.)*
+
+---
+
+### 24. A time you saw a lot of plastic waste
+**Part 2:** Where it was and what you saw • Why there was a lot of plastic • What you did • How you felt.
+**Part 3:**
+1. Should we use plastic products?
+2. How can we reduce our use of plastic?
+3. What kinds of plastic waste are often seen in your country?
+4. Why do people like to use plastic products?
+
+✍️ **Writing (Problem–Solution):** *Plastic waste is a serious environmental problem. What are the causes, and what can individuals and governments do?*
+
+---
+
+### 25. A house or apartment you often visit
+**Part 2:** Whose home it is • How often you visit • What it looks like • How you feel about it.
+**Part 3:**
+1. What safety risks are there in residential buildings in cities?
+2. What is the difference between living in the countryside and the city?
+3. Do you prefer the city or the countryside?
+4. Is it expensive to decorate a house or apartment where you live?
+
+✍️ **Writing (Discuss both views):** *Some people prefer to live in the city, others in the countryside. Discuss both views and give your opinion.*
+
+---
+
+### 26. Something difficult but successful you did
+**Part 2:** What you did • How you did it • How difficult it was • How you felt.
+**Part 3:**
+1. What kinds of jobs require people to be confident?
+2. On what occasions should children be encouraged? How?
+3. How do you help children stay focused?
+4. What challenges do young people face today?
+
+✍️ **Writing (Problem–Solution):** *Young people face more challenges today than in the past. What are the main challenges and how can they be addressed?*
+*(Đề phụ: Praise is more effective than criticism in encouraging children. Discuss.)*
+
