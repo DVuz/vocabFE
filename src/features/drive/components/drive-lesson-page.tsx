@@ -28,10 +28,12 @@ function MarkdownContent({
   content,
   tableViewMode,
   imageFiles,
+  audioFiles,
 }: {
   content: string;
   tableViewMode: TableViewMode;
   imageFiles: DriveImageFile[];
+  audioFiles: DriveAudioFile[];
 }) {
   const isGrid = tableViewMode === "grid";
   const imageFileByName = useMemo(
@@ -41,11 +43,20 @@ function MarkdownContent({
       ),
     [imageFiles],
   );
+  const audioFileNames = useMemo(
+    () =>
+      new Set(
+        audioFiles.map((audio) => audio.name.trim().toLocaleLowerCase()),
+      ),
+    [audioFiles],
+  );
   const markdown = useMemo(
     () =>
       content.replace(
         /!\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]/g,
         (embed, name, width?: string) => {
+          if (audioFileNames.has(name.trim().toLocaleLowerCase())) return "";
+
           const image = imageFileByName.get(name.trim().toLocaleLowerCase());
           if (!image) return embed;
 
@@ -57,7 +68,7 @@ function MarkdownContent({
           return `![${name.trim()}](https://drive-image.local/${encodeURIComponent(image.id)}${widthQuery})`;
         },
       ),
-    [content, imageFileByName],
+    [audioFileNames, content, imageFileByName],
   );
 
   return (
@@ -289,20 +300,30 @@ interface ParsedLesson {
   sections: Section[];
 }
 
-function parseSections(markdown: string): ParsedLesson {
+function parseSections(
+  markdown: string,
+  audioFiles: DriveAudioFile[],
+): ParsedLesson {
   const lines = markdown.split(/\r?\n/);
+  const audioFileNames = new Set(
+    audioFiles.map((audio) => audio.name.trim().toLocaleLowerCase()),
+  );
   const sections: Section[] = [];
   let current: Section | null = null;
   const intro: string[] = [];
 
   for (const line of lines) {
+    const attachment = line.match(/^\s*!\[\[([^\]|]+?)(?:\|[^\]]+)?\]\]\s*$/);
+    const isAudioAttachment =
+      attachment &&
+      audioFileNames.has(attachment[1].trim().toLocaleLowerCase());
     const heading = line.match(/^###\s+(.+)$/);
     if (heading) {
       if (current) sections.push({ ...current, answer: current.answer.trim() });
       current = { question: heading[1].trim(), answer: "" };
-    } else if (current && !line.match(/^!\[\[.*\]\]$/)) {
+    } else if (current && !isAudioAttachment) {
       current.answer += `${line}\n`;
-    } else if (!current) {
+    } else if (!current && !isAudioAttachment) {
       intro.push(line);
     }
   }
@@ -397,8 +418,8 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [tableViewMode, setTableViewMode] = useState<TableViewMode>("grid");
   const parsedLesson = useMemo(
-    () => parseSections(data?.content ?? ""),
-    [data?.content],
+    () => parseSections(data?.content ?? "", data?.audioFiles ?? []),
+    [data?.audioFiles, data?.content],
   );
   const { intro, sections } = parsedLesson;
 
@@ -497,6 +518,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                     content={intro}
                     tableViewMode={tableViewMode}
                     imageFiles={data.imageFiles}
+                    audioFiles={data.audioFiles}
                   />
                 </div>
               )}
@@ -533,6 +555,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                           content={section.answer || "No answer available."}
                           tableViewMode={tableViewMode}
                           imageFiles={data.imageFiles}
+                          audioFiles={data.audioFiles}
                         />
                       </div>
                     )}
@@ -546,6 +569,7 @@ export function DriveLessonPage({ fileId }: { fileId: string }) {
                 content={data.content}
                 tableViewMode={tableViewMode}
                 imageFiles={data.imageFiles}
+                audioFiles={data.audioFiles}
               />
             </div>
           )}
