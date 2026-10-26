@@ -11,4 +11,5 @@ export const ROUTES = {
   DRIVE: '/drive',
   DRIVE_FILE: '/drive/$fileId',
   SEARCH_WORD: '/search/$word',
+  COMPARE_WORDS: '/compare/$wordA/$wordB',
 }

@@ -1,7 +1,6 @@
-import { Link } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
-import { Search } from 'lucide-react'
-import type { FormEvent } from 'react'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { ArrowLeft, Search } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
 import { ROUTES } from '../../../shared/constants/routes'
 import type { Meaning, WordData } from '../types/search.types'
 import { POS_DOT } from '../constants'
@@ -19,6 +18,18 @@ interface SearchSidebarProps {
 }
 
 export function SearchSidebar({ query, setQuery, data, loading, showVN, setShowVN, grouped, posList, onSearch }: SearchSidebarProps) {
+  const navigate = useNavigate()
+  const [compareWord, setCompareWord] = useState('')
+
+  function handleCompare(event: FormEvent) {
+    event.preventDefault()
+    const firstWord = data?.word ?? query.trim()
+    const secondWord = compareWord.trim()
+    if (firstWord && secondWord) {
+      navigate({ to: '/compare/$wordA/$wordB', params: { wordA: firstWord, wordB: secondWord } })
+    }
+  }
+
   return (
     <aside className="flex w-full flex-col gap-4 lg:sticky lg:top-24 lg:w-72 lg:shrink-0">
       <form onSubmit={onSearch}>
@@ -38,6 +49,14 @@ export function SearchSidebar({ query, setQuery, data, loading, showVN, setShowV
           >
             Tra
           </button>
+        </div>
+      </form>
+
+      <form onSubmit={handleCompare} className="rounded-xl border border-emerald-100 bg-emerald-50/60 p-3">
+        <p className="mb-2 text-xs font-bold text-emerald-800">So sánh với một từ khác</p>
+        <div className="flex gap-2">
+          <input value={compareWord} onChange={event => setCompareWord(event.target.value)} placeholder="Nhập từ thứ hai..." className="min-w-0 flex-1 rounded-lg border border-emerald-200 bg-white px-2.5 py-2 text-xs outline-none focus:border-emerald-500" />
+          <button type="submit" className="rounded-lg bg-emerald-600 px-2.5 text-xs font-semibold text-white hover:bg-emerald-700">So sánh</button>
         </div>
       </form>
 

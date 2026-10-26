@@ -25,6 +25,7 @@ import { Route as ProtectedDriveIndexRouteImport } from './../routes/_protected/
 import { Route as PublicSearchWordRouteImport } from './../routes/_public/search/$word'
 import { Route as ProtectedWordListsWordListIdRouteImport } from './../routes/_protected/word-lists/$wordListId'
 import { Route as ProtectedDriveFileIdRouteImport } from './../routes/_protected/drive/$fileId'
+import { Route as PublicCompareWordAWordBRouteImport } from './../routes/_public/compare/$wordA/$wordB'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -105,6 +106,11 @@ const ProtectedDriveFileIdRoute = ProtectedDriveFileIdRouteImport.update({
   path: '/$fileId',
   getParentRoute: () => ProtectedDriveRoute,
 } as any)
+const PublicCompareWordAWordBRoute = PublicCompareWordAWordBRouteImport.update({
+  id: '/compare/$wordA/$wordB',
+  path: '/compare/$wordA/$wordB',
+  getParentRoute: () => PublicRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/search/$word': typeof PublicSearchWordRoute
   '/drive/': typeof ProtectedDriveIndexRoute
   '/word-lists/': typeof ProtectedWordListsIndexRoute
+  '/compare/$wordA/$wordB': typeof PublicCompareWordAWordBRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/search/$word': typeof PublicSearchWordRoute
   '/drive': typeof ProtectedDriveIndexRoute
   '/word-lists': typeof ProtectedWordListsIndexRoute
+  '/compare/$wordA/$wordB': typeof PublicCompareWordAWordBRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/_public/search/$word': typeof PublicSearchWordRoute
   '/_protected/drive/': typeof ProtectedDriveIndexRoute
   '/_protected/word-lists/': typeof ProtectedWordListsIndexRoute
+  '/_public/compare/$wordA/$wordB': typeof PublicCompareWordAWordBRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
     | '/search/$word'
     | '/drive/'
     | '/word-lists/'
+    | '/compare/$wordA/$wordB'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/search/$word'
     | '/drive'
     | '/word-lists'
+    | '/compare/$wordA/$wordB'
   id:
     | '__root__'
     | '/_protected'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/_public/search/$word'
     | '/_protected/drive/'
     | '/_protected/word-lists/'
+    | '/_public/compare/$wordA/$wordB'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedDriveFileIdRouteImport
       parentRoute: typeof ProtectedDriveRoute
     }
+    '/_public/compare/$wordA/$wordB': {
+      id: '/_public/compare/$wordA/$wordB'
+      path: '/compare/$wordA/$wordB'
+      fullPath: '/compare/$wordA/$wordB'
+      preLoaderRoute: typeof PublicCompareWordAWordBRouteImport
+      parentRoute: typeof PublicRoute
+    }
   }
 }
 
@@ -383,11 +402,13 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 interface PublicRouteChildren {
   PublicIndexRoute: typeof PublicIndexRoute
   PublicSearchWordRoute: typeof PublicSearchWordRoute
+  PublicCompareWordAWordBRoute: typeof PublicCompareWordAWordBRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicIndexRoute: PublicIndexRoute,
   PublicSearchWordRoute: PublicSearchWordRoute,
+  PublicCompareWordAWordBRoute: PublicCompareWordAWordBRoute,
 }
 
 const PublicRouteWithChildren =
