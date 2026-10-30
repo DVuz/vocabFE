@@ -332,6 +332,19 @@ function parseSections(
   return { intro: intro.join("\n").trim(), sections };
 }
 
+function isPublicSupabaseStorageUrl(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    return (
+      parsedUrl.protocol === "https:" &&
+      parsedUrl.hostname.endsWith(".supabase.co") &&
+      parsedUrl.pathname.startsWith("/storage/v1/object/public/")
+    );
+  } catch {
+    return false;
+  }
+}
+
 function AudioPlayer({ audio }: { audio: DriveAudioFile }) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -350,7 +363,7 @@ function AudioPlayer({ audio }: { audio: DriveAudioFile }) {
         const url = audio.streamUrl.startsWith("http")
           ? audio.streamUrl
           : `${baseUrl}${audio.streamUrl}`;
-        const token = getAccessToken();
+        const token = isPublicSupabaseStorageUrl(url) ? null : getAccessToken();
         const response = await fetch(url, {
           headers: token ? { Authorization: `Bearer ${token}` } : undefined,
           signal: controller.signal,
