@@ -1,7 +1,10 @@
-import { BookOpen } from 'lucide-react'
+import { Bookmark, Check, ChevronDown, ChevronUp } from 'lucide-react'
+import { useState } from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import type { Meaning } from '../types/search.types'
 import { AudioButton } from './AudioButton'
-import { CEFR_COLOR, POS_COLOR } from '../constants'
+import { CEFR_COLOR } from '../constants'
 
 interface MeaningCardProps {
   meaning: Meaning
@@ -11,78 +14,172 @@ interface MeaningCardProps {
   saving: boolean
   saveError: string | null
   onSave: () => void
+  groupUkIpa?: string | null
+  groupUsIpa?: string | null
 }
 
-export function MeaningCard({ meaning, index, showVN, saved, saving, saveError, onSave }: MeaningCardProps) {
-  const posClass = POS_COLOR[meaning.partOfSpeech] ?? 'bg-zinc-100 text-zinc-600 border-zinc-200'
+export function MeaningCard({
+  meaning,
+  index,
+  showVN,
+  saved,
+  saving,
+  saveError,
+  onSave,
+  groupUkIpa,
+  groupUsIpa,
+}: MeaningCardProps) {
+  const [showAllExamples, setShowAllExamples] = useState(false)
+
+  // Only show IPA inside the individual meaning row if it differs from the POS group's default IPA
+  const hasCustomUkIpa =
+    Boolean(meaning.ipa.uk) && meaning.ipa.uk !== groupUkIpa
+  const hasCustomUsIpa =
+    Boolean(meaning.ipa.us) && meaning.ipa.us !== groupUsIpa
+
+  const visibleExamples = showAllExamples
+    ? meaning.examples
+    : meaning.examples.slice(0, 1)
+  const hiddenExamplesCount = Math.max(0, meaning.examples.length - 1)
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-5 transition-all hover:border-zinc-300 hover:shadow-sm">
-      <div className="mb-3 flex items-start justify-between gap-3">
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-          <span className="shrink-0 text-xs font-bold text-zinc-300">{index}</span>
-
-          <span className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${posClass}`}>
-            {meaning.partOfSpeech}
-          </span>
-
-          {meaning.cefrLevel && (
-            <span className={`shrink-0 rounded border px-1.5 py-0.5 text-xs font-bold ${CEFR_COLOR[meaning.cefrLevel] ?? 'bg-zinc-100 text-zinc-500 border-zinc-200'}`}>
-              {meaning.cefrLevel}
-            </span>
-          )}
-
-          {(meaning.ipa.uk || meaning.ipa.us) && (
-            <div className="flex flex-wrap items-center gap-2">
-              {meaning.ipa.uk && (
-                <span className="flex items-center gap-1.5 rounded-md border-2 border-blue-300 bg-blue-50 px-3 py-1 font-mono text-[12px] font-semibold text-blue-700">
-                  <span className="text-blue-600">UK</span>
-                  <span>/{meaning.ipa.uk}/</span>
-                  {meaning.audio.uk && <AudioButton url={meaning.audio.uk} label="UK" />}
-                </span>
-              )}
-              {meaning.ipa.us && (
-                <span className="flex items-center gap-1.5 rounded-md border-2 border-amber-300 bg-amber-50 px-3 py-1 font-mono text-[12px] font-semibold text-amber-700">
-                  <span className="text-amber-600">US</span>
-                  <span>/{meaning.ipa.us}/</span>
-                  {meaning.audio.us && <AudioButton url={meaning.audio.us} label="US" />}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
-
-        <button
-          onClick={onSave}
-          disabled={saved || saving}
-          title={saved ? 'Đã lưu' : 'Thêm vào danh sách từ'}
-          className={`shrink-0 flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all
-            ${saved
-              ? 'bg-emerald-50 border-emerald-300 text-emerald-600 cursor-default'
-              : saving
-                ? 'border-zinc-200 text-zinc-300 cursor-wait'
-                : 'border-zinc-200 text-zinc-400 hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50'
+    <article
+      id={`meaning-${meaning.id}`}
+      className="group relative flex items-start gap-3 px-4 py-3.5 transition-colors first:pt-4 last:pb-4 hover:bg-slate-50/70 sm:gap-4 sm:px-5 sm:py-4"
+    >
+      {/* Left Column: Sense Index + CEFR Level */}
+      <div className="flex w-9 shrink-0 flex-col items-center gap-1 pt-0.5 sm:w-10">
+        <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-100 text-xs font-extrabold tabular-nums text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-800">
+          {index}
+        </span>
+        {meaning.cefrLevel && (
+          <Badge
+            variant="outline"
+            className={`h-4.5 rounded px-1.5 py-0 text-[10px] font-extrabold ${
+              CEFR_COLOR[meaning.cefrLevel] ??
+              'border-slate-200 bg-slate-100 text-slate-600'
             }`}
-        >
-          <BookOpen size={11} />
-          {saving ? 'Đang lưu…' : saved ? 'Đã lưu' : 'Lưu'}
-        </button>
+          >
+            {meaning.cefrLevel}
+          </Badge>
+        )}
       </div>
 
-      {saveError && <p className="mb-2 text-xs text-red-500">{saveError}</p>}
+      {/* Center Column: Concise Meaning Layer + Examples */}
+      <div className="min-w-0 flex-1">
+        {/* Optional variant IPA if different from group header */}
+        {(hasCustomUkIpa || hasCustomUsIpa) && (
+          <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
+            {hasCustomUkIpa &&
+              (meaning.audio.uk ? (
+                <AudioButton
+                  url={meaning.audio.uk}
+                  label="UK"
+                  ipa={meaning.ipa.uk}
+                  tone="uk"
+                />
+              ) : (
+                <span className="rounded bg-blue-50 px-2 py-0.5 font-mono text-xs text-blue-700">
+                  UK /{meaning.ipa.uk}/
+                </span>
+              ))}
+            {hasCustomUsIpa &&
+              (meaning.audio.us ? (
+                <AudioButton
+                  url={meaning.audio.us}
+                  label="US"
+                  ipa={meaning.ipa.us}
+                  tone="us"
+                />
+              ) : (
+                <span className="rounded bg-amber-50 px-2 py-0.5 font-mono text-xs text-amber-700">
+                  US /{meaning.ipa.us}/
+                </span>
+              ))}
+          </div>
+        )}
 
-      <p className="text-sm leading-relaxed font-medium text-zinc-900">{meaning.definition}</p>
-      {showVN && <p className="mt-0.5 text-sm leading-relaxed text-zinc-500 italic">{meaning.vnDefinition}</p>}
+        {/* Vietnamese sense headline (when showVN is active) + English definition */}
+        {showVN && meaning.vnDefinition ? (
+          <div className="space-y-0.5">
+            <p className="text-[15px] font-bold leading-snug text-emerald-800">
+              {meaning.vnDefinition}
+            </p>
+            <p className="text-sm leading-relaxed text-slate-700">
+              {meaning.definition}
+            </p>
+          </div>
+        ) : (
+          <p className="text-[15px] font-semibold leading-snug text-slate-900">
+            {meaning.definition}
+          </p>
+        )}
 
-      {meaning.examples.length > 0 && (
-        <ul className="mt-3 flex flex-col gap-1.5">
-          {meaning.examples.map((example, i) => (
-            <li key={i} className="border-l-2 border-emerald-300 pl-3 text-xs leading-relaxed text-zinc-600 italic">
-              "{example}"
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+        {saveError && (
+          <p className="mt-1 text-xs font-medium text-red-500">{saveError}</p>
+        )}
+
+        {/* Compact Examples */}
+        {meaning.examples.length > 0 && (
+          <div className="mt-2 space-y-1">
+            {visibleExamples.map((example, i) => (
+              <p
+                key={i}
+                className="border-l-2 border-emerald-300/80 pl-2.5 text-xs italic leading-relaxed text-slate-500 sm:text-[13px]"
+              >
+                "{example}"
+              </p>
+            ))}
+
+            {hiddenExamplesCount > 0 && (
+              <button
+                type="button"
+                onClick={() => setShowAllExamples(v => !v)}
+                className="inline-flex items-center gap-1 pt-0.5 text-[11px] font-semibold text-slate-400 transition hover:text-emerald-600"
+              >
+                {showAllExamples ? (
+                  <>
+                    <ChevronUp size={12} /> Thu gọn ví dụ
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={12} /> +{hiddenExamplesCount} ví dụ khác
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Right Column: Save Button */}
+      <div className="shrink-0">
+        <Button
+          type="button"
+          size="xs"
+          variant={saved ? 'secondary' : 'outline'}
+          onClick={onSave}
+          disabled={saved || saving}
+          title={saved ? 'Đã lưu nghĩa này' : 'Lưu lớp nghĩa này vào kho từ'}
+          className={`rounded-lg px-2.5 font-semibold transition ${
+            saved
+              ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+              : 'border-slate-200 text-slate-500 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
+          }`}
+        >
+          {saved ? (
+            <>
+              <Check size={12} />
+              <span className="hidden sm:inline">Đã lưu</span>
+            </>
+          ) : (
+            <>
+              <Bookmark size={12} />
+              <span>{saving ? '...' : 'Lưu'}</span>
+            </>
+          )}
+        </Button>
+      </div>
+    </article>
   )
 }

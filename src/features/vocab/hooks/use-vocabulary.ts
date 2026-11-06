@@ -47,10 +47,10 @@ export function useVocabulary(search: VocabSearch) {
     enabled: isLoggedIn,
   })
 
-  const rows = query.data?.data ?? []
   const pagination = query.data?.pagination ?? null
 
   const filteredRows = useMemo(() => {
+    const rows = query.data?.data ?? []
     return rows.filter(row => {
       if (!matchesQuery(row, search.q)) {
         return false
@@ -62,9 +62,12 @@ export function useVocabulary(search: VocabSearch) {
 
       return true
     })
-  }, [rows, search.q, search.tab])
+  }, [query.data?.data, search.q, search.tab])
 
-  const total = search.tab === 'all' && !search.q ? (pagination?.total ?? filteredRows.length) : filteredRows.length
+  const total =
+    search.tab === 'all' && !search.q
+      ? (pagination?.total ?? filteredRows.length)
+      : filteredRows.length
 
   return {
     isLoggedIn,

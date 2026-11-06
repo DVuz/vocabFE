@@ -1,6 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router'
 import { BookOpen, BookPlus, FolderOpen, Grid2x2, Layers, LayoutList, Search } from 'lucide-react'
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useMemo, useState, type FormEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -21,11 +21,15 @@ import { STATUS_LABEL } from './constants'
 export function VocabularyPage({ search }: { search: VocabSearch }) {
   const navigate = useNavigate()
   const [searchInput, setSearchInput] = useState(search.q ?? '')
+  const [prevSearchQ, setPrevSearchQ] = useState(search.q)
   const [viewMode, setViewMode] = useState<'table' | 'grid' | 'flashcard'>('table')
 
-  const { isLoggedIn, rows, total, pagination, isFetching, isError, error } = useVocabulary(search)
+  if (search.q !== prevSearchQ) {
+    setPrevSearchQ(search.q)
+    setSearchInput(search.q ?? '')
+  }
 
-  useEffect(() => { setSearchInput(search.q ?? '') }, [search.q])
+  const { isLoggedIn, rows, total, pagination, isFetching, isError, error } = useVocabulary(search)
 
   const page = search.page ?? 1
   const statusValue = search.status ?? 'all'
